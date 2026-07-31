@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Edward Tatton — Software &amp; Digital Consulting for Small Business</title>
+<meta name="description" content="Edward Tatton is an independent software and digital consultant. Custom web applications, internal tools, and automation for small businesses. Remote, US-wide.">
+<meta name="author" content="Edward Tatton">
+<link rel="canonical" href="https://etatton.com/">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://etatton.com/">
+<meta property="og:title" content="Edward Tatton — Software &amp; Digital Consulting">
+<meta property="og:description" content="Custom web applications, internal tools, and automation for small businesses. Remote, US-wide.">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='18' fill='%23111'/><text y='71' x='50' text-anchor='middle' font-size='58' font-family='Georgia,serif' fill='%23fff'>et</text></svg>">
+
+<style>
+  :root{
+    --ink:#12100e;
+    --ink-2:#3d3935;
+    --ink-3:#6b645d;
+    --line:#e2ddd6;
+    --paper:#fbfaf8;
+    --paper-2:#f3f0eb;
+    --accent:#9a3f24;
+    --max:1140px;
+    --gut:clamp(1.5rem,5vw,4.5rem);
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}
+    *{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+  body{
+    margin:0;background:var(--paper);color:var(--ink);
+    font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    font-size:clamp(1rem,.96rem + .18vw,1.075rem);
+    line-height:1.65;font-weight:400;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{font-family:Fraunces,Georgia,"Times New Roman",serif;font-weight:400;letter-spacing:-.015em;line-height:1.1;margin:0}
+  p{margin:0}
+  a{color:inherit}
+  .wrap{max-width:var(--max);margin-inline:auto;padding-inline:var(--gut)}
+  .eyebrow{
+    font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;
+    font-weight:500;color:var(--ink-3);margin-bottom:1.75rem;
+  }
+  .rule{height:1px;background:var(--line);border:0;margin:0}
+
+  /* ---------- skip link ---------- */
+  .skip{position:absolute;left:-9999px;top:0;background:var(--ink);color:var(--paper);padding:.75rem 1.25rem;z-index:100}
+  .skip:focus{left:0}
+
+  /* ---------- header ---------- */
+  header{position:sticky;top:0;z-index:50;background:rgba(251,250,248,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;justify-content:space-between;gap:2rem;height:4.5rem}
+  .brand{font-family:Fraunces,Georgia,serif;font-size:1.2rem;letter-spacing:-.02em;text-decoration:none;white-space:nowrap}
+  .nav ul{display:flex;gap:2.25rem;list-style:none;margin:0;padding:0}
+  .nav a.navlink{
+    text-decoration:none;font-size:.9rem;color:var(--ink-2);
+    padding-bottom:2px;border-bottom:1px solid transparent;transition:border-color .2s,color .2s;
+  }
+  .nav a.navlink:hover{color:var(--ink);border-bottom-color:var(--ink)}
+  @media (max-width:760px){.nav ul{display:none}}
+
+  /* ---------- buttons ---------- */
+  .btn{
+    display:inline-flex;align-items:center;gap:.6rem;
+    background:var(--ink);color:var(--paper);text-decoration:none;
+    padding:.9rem 1.6rem;border-radius:2px;font-size:.925rem;font-weight:500;
+    border:1px solid var(--ink);cursor:pointer;font-family:inherit;
+    transition:background .2s,color .2s;
+  }
+  .btn:hover{background:transparent;color:var(--ink)}
+  .btn-ghost{background:transparent;color:var(--ink)}
+  .btn-ghost:hover{background:var(--ink);color:var(--paper)}
+
+  /* ---------- hero ---------- */
+  .hero{padding:clamp(4.5rem,11vw,9rem) 0 clamp(3.5rem,8vw,6rem)}
+  .hero h1{font-size:clamp(2.6rem,7vw,5.1rem);max-width:16ch;margin-bottom:2rem}
+  .hero h1 em{font-style:italic;color:var(--accent)}
+  .hero .lede{font-size:clamp(1.1rem,1rem + .6vw,1.4rem);color:var(--ink-2);max-width:54ch;line-height:1.55}
+  .hero-actions{display:flex;flex-wrap:wrap;gap:1rem;align-items:center;margin-top:2.75rem}
+  .avail{display:inline-flex;align-items:center;gap:.55rem;font-size:.875rem;color:var(--ink-3)}
+  .dot{width:7px;height:7px;border-radius:50%;background:#2f7d4f;box-shadow:0 0 0 3px rgba(47,125,79,.16)}
+
+  /* ---------- section scaffolding ---------- */
+  section{padding:clamp(3.75rem,8vw,6.5rem) 0}
+  .sec-head{max-width:60ch;margin-bottom:clamp(2.5rem,5vw,3.75rem)}
+  .sec-head h2{font-size:clamp(1.85rem,3.4vw,2.75rem);margin-bottom:1.1rem}
+  .sec-head p{color:var(--ink-2);font-size:1.05rem}
+
+  /* ---------- services ---------- */
+  .services{display:grid;grid-template-columns:repeat(auto-fit,minmax(258px,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+  .svc{background:var(--paper);padding:clamp(1.9rem,3.4vw,2.6rem)}
+  .svc .num{font-family:Fraunces,Georgia,serif;font-size:.9rem;color:var(--accent);margin-bottom:1.4rem}
+  .svc h3{font-size:1.28rem;margin-bottom:.85rem}
+  .svc p{color:var(--ink-2);font-size:.965rem}
+
+  /* ---------- work ---------- */
+  .work-item{
+    display:grid;grid-template-columns:minmax(0,7.5rem) minmax(0,1fr);
+    gap:clamp(1.25rem,4vw,3.5rem);
+    padding:clamp(2rem,4vw,2.9rem) 0;border-bottom:1px solid var(--line);
+  }
+  .work-item:first-of-type{border-top:1px solid var(--line)}
+  .work-meta{font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);padding-top:.5rem}
+  .work-body h3{font-size:clamp(1.45rem,2.4vw,1.9rem);margin-bottom:.9rem}
+  .work-body p{color:var(--ink-2);max-width:62ch}
+  .tags{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.4rem;list-style:none;padding:0}
+  .tags li{font-size:.775rem;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-3);border:1px solid var(--line);padding:.32rem .7rem;border-radius:2px;background:var(--paper-2)}
+  @media (max-width:640px){.work-item{grid-template-columns:1fr;gap:.75rem}.work-meta{padding-top:0}}
+
+  /* ---------- process ---------- */
+  .process{background:var(--paper-2);border-block:1px solid var(--line)}
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:clamp(2rem,4vw,3rem)}
+  .step h3{font-size:1.13rem;margin-bottom:.7rem;display:flex;align-items:baseline;gap:.7rem}
+  .step h3 span{font-size:.8rem;color:var(--accent);font-family:Inter,sans-serif;letter-spacing:.1em}
+  .step p{color:var(--ink-2);font-size:.955rem}
+
+  /* ---------- about ---------- */
+  .about-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.35fr);gap:clamp(2rem,6vw,5rem);align-items:start}
+  @media (max-width:820px){.about-grid{grid-template-columns:1fr}}
+  .about-body p + p{margin-top:1.25rem}
+  .about-body{color:var(--ink-2);font-size:1.06rem}
+  .facts{list-style:none;margin:2rem 0 0;padding:0;border-top:1px solid var(--line)}
+  .facts li{display:flex;justify-content:space-between;gap:1.5rem;padding:.85rem 0;border-bottom:1px solid var(--line);font-size:.925rem}
+  .facts .k{color:var(--ink-3)}
+  .facts .v{text-align:right}
+
+  /* ---------- contact ---------- */
+  .contact{background:var(--ink);color:var(--paper)}
+  .contact h2{color:var(--paper)}
+  .contact .sec-head p{color:#b8b1a8}
+  .contact-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:clamp(2.5rem,6vw,5rem);align-items:start}
+  @media (max-width:820px){.contact-grid{grid-template-columns:1fr}}
+  .field{margin-bottom:1.4rem}
+  .field label{display:block;font-size:.815rem;letter-spacing:.09em;text-transform:uppercase;color:#b8b1a8;margin-bottom:.6rem}
+  .field input,.field textarea,.field select{
+    width:100%;background:transparent;border:0;border-bottom:1px solid #4a453f;
+    color:var(--paper);font-family:inherit;font-size:1rem;padding:.65rem 0;border-radius:0;
+    transition:border-color .2s;
+  }
+  .field select option{background:var(--ink);color:var(--paper)}
+  .field textarea{resize:vertical;min-height:6.5rem;line-height:1.6}
+  .field input:focus,.field textarea:focus,.field select:focus{outline:0;border-bottom-color:var(--paper)}
+  .field input::placeholder,.field textarea::placeholder{color:#6b645d}
+  .btn-light{background:var(--paper);color:var(--ink);border-color:var(--paper)}
+  .btn-light:hover{background:transparent;color:var(--paper)}
+  .btn-light[disabled]{opacity:.55;cursor:not-allowed}
+  .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+  .formnote{font-size:.85rem;color:#b8b1a8;margin-top:1.1rem}
+  .formnote a{color:var(--paper)}
+  .status{margin-top:1.25rem;padding:.9rem 1.1rem;border-radius:2px;font-size:.925rem;display:none}
+  .status.show{display:block}
+  .status.ok{background:rgba(47,125,79,.18);border:1px solid #2f7d4f;color:#cdebd8}
+  .status.err{background:rgba(154,63,36,.2);border:1px solid #b5583a;color:#f3d3c8}
+  .direct{border-top:1px solid #35302b;margin-top:2rem;padding-top:2rem}
+  .direct a{color:var(--paper)}
+
+  /* ---------- footer ---------- */
+  footer{padding:2.75rem 0;font-size:.875rem;color:var(--ink-3)}
+  .foot{display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between;align-items:center}
+  footer a{color:var(--ink-2)}
+
+  :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#top">Edward&nbsp;Tatton</a>
+    <nav aria-label="Primary">
+      <ul>
+        <li><a class="navlink" href="#services">Services</a></li>
+        <li><a class="navlink" href="#work">Work</a></li>
+        <li><a class="navlink" href="#process">Process</a></li>
+        <li><a class="navlink" href="#about">About</a></li>
+        <li><a class="navlink" href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- HERO -->
+<div id="top" class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Software &amp; digital consulting</p>
+    <h1>Small businesses deserve software that <em>actually fits</em>.</h1>
+    <p class="lede">
+      I'm Edward Tatton. I build custom web applications, internal tools, and automation
+      for small teams — the kind of systems that usually get duct-taped together out of
+      spreadsheets and good intentions. Independent, remote, working with clients across the US.
+    </p>
+    <div class="hero-actions">
+      <a class="btn" href="#contact">Start a conversation</a>
+      <a class="btn btn-ghost" href="#work">See the work</a>
+      <span class="avail"><span class="dot" aria-hidden="true"></span> Currently taking new projects</span>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section id="services" aria-labelledby="services-h">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 id="services-h">What I do</h2>
+      <p>Four kinds of work, one underlying idea: build the smallest thing that solves the real problem, then make it durable.</p>
+    </div>
+    <div class="services">
+    <article class="svc">
+      <p class="num">01</p>
+      <h3>Custom web applications</h3>
+      <p>Member portals, booking and scheduling systems, client dashboards. Built around how your business actually runs rather than forcing you into someone else's workflow.</p>
+    </article>
+    <article class="svc">
+      <p class="num">02</p>
+      <h3>Internal tools &amp; automation</h3>
+      <p>The spreadsheet everyone's afraid to touch, the report that takes three hours every Monday, the data that lives in four places. Replaced with something that runs itself.</p>
+    </article>
+    <article class="svc">
+      <p class="num">03</p>
+      <h3>Websites that perform</h3>
+      <p>Fast, accessible, search-friendly sites on modern edge infrastructure. No bloated page builders, no monthly platform tax, no six-second load times on mobile.</p>
+    </article>
+    <article class="svc">
+      <p class="num">04</p>
+      <h3>Technical advisory</h3>
+      <p>Build or buy? Is this vendor worth it? Why does our stack keep breaking? Straight answers from someone with no product to upsell you.</p>
+    </article>
+    </div>
+  </div>
+</section>
+
+<!-- WORK -->
+<section id="work" aria-labelledby="work-h">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 id="work-h">Selected work</h2>
+      <p>A sample of recent projects. Some details are kept general at clients' request.</p>
+    </div>
+
+    <article class="work-item">
+      <p class="work-meta">Member portal</p>
+      <div class="work-body">
+        <h3>RDB Backstage</h3>
+        <p>
+          A members-only platform for a live production company. It gives contractors a single
+          place to handle onboarding paperwork, see the rates that apply to them, and pull live
+          operational data — replacing a scattered mix of email threads, PDFs and shared sheets.
+          Recently rebuilt end-to-end for mobile, so crew can use it from a job site rather than a desk.
+        </p>
+        <ul class="tags">
+          <li>Authentication</li><li>Live data feeds</li><li>Document handling</li><li>Mobile rebuild</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="work-item">
+      <p class="work-meta">Event tooling</p>
+      <div class="work-body">
+        <h3>Tournament signup &amp; live leaderboard</h3>
+        <p>
+          Registration and a real-time leaderboard for a recurring sporting event, built as
+          lightweight serverless services at the network edge. Sub-two-millisecond response
+          times, no server to maintain between events, and no cost when it's sitting idle.
+        </p>
+        <ul class="tags">
+          <li>Serverless</li><li>Real-time</li><li>Edge infrastructure</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="work-item">
+      <p class="work-meta">Automation</p>
+      <div class="work-body">
+        <h3>Private workflow automation</h3>
+        <p>
+          Ongoing custom automation work connecting scheduling, messaging and record-keeping
+          for a small organization — the unglamorous connective tissue that removes a recurring
+          manual chore from someone's week, every week.
+        </p>
+        <ul class="tags">
+          <li>Integrations</li><li>Scheduled jobs</li><li>Notifications</li>
+        </ul>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process" class="process" aria-labelledby="process-h">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 id="process-h">How I work</h2>
+      <p>No discovery-phase theatre, no twelve-week runway before you see anything real.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <h3><span>01</span> Start with the problem</h3>
+        <p>A short conversation about what's actually costing you time or money. Sometimes the answer is that you don't need custom software at all — I'll tell you that.</p>
+      </div>
+      <div class="step">
+        <h3><span>02</span> Scope something small</h3>
+        <p>A fixed, clearly defined first piece with a real deliverable. You know the price and the timeline before anything starts.</p>
+      </div>
+      <div class="step">
+        <h3><span>03</span> Build in the open</h3>
+        <p>You see working software early and often, on a live preview link. Course corrections happen while they're still cheap.</p>
+      </div>
+      <div class="step">
+        <h3><span>04</span> Hand over the keys</h3>
+        <p>Your code, your accounts, your data, documented. Stay for ongoing support if it's useful — but never because you're locked in.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" aria-labelledby="about-h">
+  <div class="wrap about-grid">
+    <div class="sec-head" style="margin-bottom:0">
+      <h2 id="about-h">About</h2>
+    </div>
+    <div class="about-body">
+      <p>
+        I work with small businesses and small teams — the ones big enough to have real
+        operational problems, but not big enough to keep an engineering department on payroll.
+      </p>
+      <p>
+        Most of what I build is unglamorous and specific: a portal that saves a coordinator six
+        hours a week, a form that stops data being retyped three times, a site that loads before
+        the visitor gives up. I care much more about whether a thing is still working smoothly a
+        year from now than whether it used an interesting framework.
+      </p>
+      <p>
+        Working independently means you deal with the person doing the work. No account manager,
+        no handoff to a junior team, no billing surprises.
+      </p>
+      <ul class="facts">
+        <li><span class="k">Based</span><span class="v">United States</span></li>
+        <li><span class="k">Working with</span><span class="v">Clients nationwide, remote</span></li>
+        <li><span class="k">Engagements</span><span class="v">Fixed-scope projects &amp; ongoing support</span></li>
+        <li><span class="k">Availability</span><span class="v">Taking new projects</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact" aria-labelledby="contact-h">
+  <div class="wrap contact-grid">
+    <div class="sec-head" style="margin-bottom:0">
+      <h2 id="contact-h">Let's talk</h2>
+      <p>Tell me what you're working on — or what's not working. I read every message and reply personally, usually within a business day.</p>
+      <div class="direct">
+        <p style="color:#b8b1a8;font-size:.9rem">Prefer email?</p>
+        <p style="margin-top:.4rem"><a href="mailto:etatton@gmail.com">etatton@gmail.com</a></p>
+      </div>
+    </div>
+
+    <form id="contact-form" novalidate>
+      <div class="field">
+        <label for="name">Your name</label>
+        <input type="text" id="name" name="name" autocomplete="name" required placeholder="Jane Smith">
+      </div>
+      <div class="field">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" autocomplete="email" required placeholder="jane@company.com">
+      </div>
+      <div class="field">
+        <label for="topic">What's this about?</label>
+        <select id="topic" name="topic">
+          <option value="New project">A new project</option>
+          <option value="Existing system">Fixing or improving an existing system</option>
+          <option value="Advisory">Advice / second opinion</option>
+          <option value="Other">Something else</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="message">Tell me a bit more</label>
+        <textarea id="message" name="message" required placeholder="What are you trying to solve? Rough timeline and budget are helpful but not required."></textarea>
+      </div>
+
+      <div class="hp" aria-hidden="true">
+        <label for="company_website">Leave this blank</label>
+        <input type="text" id="company_website" name="company_website" tabindex="-1" autocomplete="off">
+      </div>
+
+      <button class="btn btn-light" type="submit" id="submit-btn">Send message</button>
+      <p class="formnote">No newsletters, no CRM sequences. Your details go to me and nowhere else.</p>
+      <div class="status" id="form-status" role="status" aria-live="polite"></div>
+    </form>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <p>© <span id="year">2026</span> Edward Tatton</p>
+    <p><a href="mailto:etatton@gmail.com">etatton@gmail.com</a></p>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  const form   = document.getElementById('contact-form');
+  const btn    = document.getElementById('submit-btn');
+  const status = document.getElementById('form-status');
+  const MAILTO = 'mailto:etatton@gmail.com';
+
+  function show(kind, html){
+    status.className = 'status show ' + kind;
+    status.innerHTML = html;
+  }
+
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    status.className = 'status';
+
+    const data = Object.fromEntries(new FormData(form).entries());
+
+    if (!data.name || !data.email || !data.message) {
+      show('err', 'Please fill in your name, email and a message.');
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
+      show('err', 'That email address doesn’t look right — mind checking it?');
+      return;
+    }
+
+    btn.disabled = true;
+    const original = btn.textContent;
+    btn.textContent = 'Sending…';
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+
+      if (res.ok) {
+        form.reset();
+        show('ok', 'Thanks — your message is on its way. I’ll get back to you shortly.');
+      } else {
+        throw new Error('bad status ' + res.status);
+      }
+    } catch (err) {
+      // Never silently lose a message: fall back to the user's mail client.
+      const subject = encodeURIComponent('Website enquiry — ' + (data.topic || 'General'));
+      const body = encodeURIComponent(
+        'Name: ' + data.name + '\nEmail: ' + data.email + '\nTopic: ' + (data.topic || '') + '\n\n' + data.message
+      );
+      show('err',
+        'Something went wrong sending that. <a href="' + MAILTO + '?subject=' + subject + '&body=' + body +
+        '">Click here to send it by email instead</a> — your message is already filled in.'
+      );
+    } finally {
+      btn.disabled = false;
+      btn.textContent = original;
+    }
+  });
+</script>
+</body>
+</html>
