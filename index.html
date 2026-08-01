@@ -74,6 +74,30 @@
   img{max-width:100%;display:block}
   .wrap{max-width:var(--max);margin-inline:auto;padding-inline:var(--gut)}
 
+  /* ---------- parallax background (Option A — grid horizon) ----------
+     Layers are fixed and GPU-composited. The grids translate by
+     (scroll x speed) MODULO their tile size, so the offset never grows
+     beyond one tile and the pattern can never run off a long page.
+     The glow is driven by scroll progress instead, over a bounded range. */
+  #bg{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+  #bg .layer{position:absolute;inset:-320px -6%;will-change:transform}
+  .px-fine{
+    background-image:linear-gradient(rgba(39,170,225,.13) 1px,transparent 1px),
+                     linear-gradient(90deg,rgba(39,170,225,.13) 1px,transparent 1px);
+    background-size:64px 64px;
+  }
+  .px-coarse{
+    background-image:linear-gradient(rgba(196,22,95,.10) 1px,transparent 1px),
+                     linear-gradient(90deg,rgba(196,22,95,.10) 1px,transparent 1px);
+    background-size:256px 256px;
+  }
+  .px-sun{
+    inset:auto -10% -30% -10%;height:120vh;
+    background:radial-gradient(closest-side,rgba(245,230,66,.16),rgba(255,45,139,.09) 55%,transparent 72%);
+  }
+  main,footer{position:relative;z-index:1}
+  @media (prefers-reduced-motion:reduce){#bg .layer{transform:none!important}}
+
   /* // eyebrow — ET3 signature */
   .eyebrow{
     font-family:var(--font-mono);font-size:.75rem;letter-spacing:.16em;text-transform:uppercase;
@@ -178,7 +202,7 @@
 
   /* two tracks — bracketed cards */
   .tracks{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:clamp(1.25rem,2.5vw,1.9rem)}
-  .track{position:relative;background:#fff;border:2px solid var(--ink);border-radius:2px;padding:clamp(1.8rem,3.4vw,2.6rem)}
+  .track{position:relative;background:rgba(255,255,255,.86);border:2px solid var(--ink);border-radius:2px;padding:clamp(1.8rem,3.4vw,2.6rem)}
   .track::before,.track::after{content:"";position:absolute;width:22px;height:22px;pointer-events:none}
   .track::before{top:-2px;left:-2px;border-top:4px solid var(--c);border-left:4px solid var(--c)}
   .track::after{bottom:-2px;right:-2px;border-bottom:4px solid var(--c);border-right:4px solid var(--c)}
@@ -207,11 +231,11 @@
   @media (max-width:640px){.work-item{grid-template-columns:1fr;gap:.75rem}.work-meta{padding-top:0}}
 
   /* process — 2x2, progressive disclosure */
-  .process{background:var(--cream-2);border-block:1px solid var(--line)}
+  .process{background:rgba(244,236,216,.72);border-block:1px solid var(--line)}
   .steps{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(1rem,2vw,1.4rem);align-items:start}
   @media (max-width:720px){.steps{grid-template-columns:1fr}}
   .step{
-    background:var(--cream);border:2px solid var(--ink);border-radius:2px;
+    background:rgba(251,247,236,.92);border:2px solid var(--ink);border-radius:2px;
     transition:box-shadow .18s ease, transform .18s ease;
   }
   .step[open]{box-shadow:6px 6px 0 var(--et3-blue)}
@@ -289,6 +313,12 @@
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
+
+<div id="bg" aria-hidden="true">
+  <div class="layer px-sun"    data-speed="0" data-from="60" data-to="-140"></div>
+  <div class="layer px-coarse" data-speed="0.16" data-tile="256"></div>
+  <div class="layer px-fine"   data-speed="0.30" data-tile="64"></div>
+</div>
 
 <header>
   <div class="wrap nav">
@@ -628,6 +658,44 @@
 
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
+
+  /* Parallax background. Grid layers use a modulo of their tile size so the
+     transform stays under one tile no matter how far the page scrolls; the
+     glow is mapped to scroll progress across a bounded range. */
+  (function () {
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const layers = Array.from(document.querySelectorAll('#bg .layer'));
+    if (!layers.length) return;
+    let ticking = false;
+
+    function paint() {
+      const y = window.scrollY || 0;
+      const max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+      const progress = Math.min(1, Math.max(0, y / max));
+
+      for (const el of layers) {
+        const tile = parseFloat(el.dataset.tile) || 0;
+        let ty;
+        if (tile) {
+          ty = -((y * parseFloat(el.dataset.speed)) % tile);
+        } else {
+          const from = parseFloat(el.dataset.from) || 0;
+          const to = parseFloat(el.dataset.to) || 0;
+          ty = from + (to - from) * progress;
+        }
+        el.style.transform = 'translate3d(0,' + ty.toFixed(2) + 'px,0)';
+      }
+      ticking = false;
+    }
+    function request() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(paint);
+    }
+    addEventListener('scroll', request, { passive: true });
+    addEventListener('resize', request, { passive: true });
+    paint();
+  })();
 
   /* Process steps: on pointer devices, opening one closes the others.
      Touch and keyboard keep plain <details> behaviour, so nothing is ever
