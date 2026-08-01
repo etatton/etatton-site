@@ -31,6 +31,11 @@
   "email": "etatton@gmail.com",
   "areaServed": "US",
   "founder": { "@type": "Person", "name": "Edward Joseph Tatton III" },
+  "sameAs": [
+    "https://et3.media",
+    "https://www.linkedin.com/in/edtatton/",
+    "https://www.instagram.com/2_weeks_on_mars"
+  ],
   "address": { "@type": "PostalAddress", "addressLocality": "Norwalk", "addressRegion": "CT", "addressCountry": "US" }
 }
 </script>
@@ -90,8 +95,29 @@
   .brand:hover .chip{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--magenta)}
   .brand .chip img{height:30px;width:auto}
   .brand span.who{font-family:var(--font-mono);font-size:.63rem;letter-spacing:.13em;text-transform:uppercase;
-    color:var(--ink-3);line-height:1.3;white-space:nowrap}
+    color:var(--ink-3);line-height:1.3;white-space:nowrap;display:flex;flex-direction:column;gap:.15rem}
+  .brand span.who em{font-style:normal;color:var(--accent-2);font-size:.6rem;letter-spacing:.1em}
+  .brand:hover span.who em{color:var(--accent)}
   @media (max-width:560px){.brand span.who{display:none}}
+
+  /* inline + listed external links */
+  a.ext{color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(196,22,95,.35);
+    transition:border-color .18s,color .18s}
+  a.ext:hover{border-bottom-color:var(--accent)}
+  a.ext::after{content:" ↗";font-size:.85em;letter-spacing:0}
+
+  .track .studio-link{margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid var(--line);
+    font-family:var(--font-mono);font-size:.78rem;letter-spacing:.06em}
+  .track .studio-link a{color:var(--accent-2);text-decoration:none;border-bottom:1px solid rgba(27,127,168,.4)}
+  .track .studio-link a:hover{border-bottom-color:var(--accent-2)}
+
+  .elsewhere{border-top:1px solid rgba(255,255,255,.14);margin-top:2rem;padding-top:2rem}
+  .elsewhere ul{list-style:none;margin:1rem 0 0;padding:0;display:flex;flex-direction:column;gap:.9rem}
+  .elsewhere a{display:flex;align-items:baseline;gap:.7rem;text-decoration:none;color:var(--cream);
+    font-family:var(--font-mono);font-size:.88rem}
+  .elsewhere a b{color:var(--cyan);font-weight:700;letter-spacing:.06em;border-bottom:1px solid transparent;transition:border-color .18s}
+  .elsewhere a:hover b{border-bottom-color:var(--cyan)}
+  .elsewhere a span{color:#b3aac6;font-size:.8rem;font-family:var(--font-sans);letter-spacing:0}
   .nav ul{display:flex;gap:2rem;list-style:none;margin:0;padding:0}
   .nav a.navlink{
     font-family:var(--font-mono);text-decoration:none;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;
@@ -250,11 +276,13 @@
   .status.err{background:rgba(255,45,139,.16);border:1px solid var(--magenta);color:#ffc2de}
   .direct{border-top:1px solid rgba(255,255,255,.14);margin-top:2rem;padding-top:2rem}
   .direct a{color:var(--cyan);font-family:var(--font-mono);font-size:.95rem}
-  .direct .lbl{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.13em;text-transform:uppercase;color:#b3aac6}
+  .direct .lbl,.elsewhere .lbl{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.13em;text-transform:uppercase;color:#b3aac6}
 
   footer{padding:2.5rem 0;font-family:var(--font-mono);font-size:.76rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
   .foot{display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between;align-items:center}
-  footer a{color:var(--ink-2)}
+  footer a{color:var(--ink-2);text-decoration:none;border-bottom:1px solid transparent;transition:border-color .18s,color .18s}
+  footer a:hover{color:var(--ink);border-bottom-color:var(--magenta)}
+  .foot-links{display:flex;flex-wrap:wrap;gap:1.35rem}
 
   :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 </style>
@@ -264,9 +292,10 @@
 
 <header>
   <div class="wrap nav">
-    <a class="brand" href="#top">
+    <a class="brand" href="https://et3.media" target="_blank" rel="noopener"
+       aria-label="ET3 Media — visit the studio site at et3.media">
       <span class="chip"><img src="/assets/et3-media-logo.png" width="440" height="242" alt="ET3 Media"></span>
-      <span class="who">Edward Joseph Tatton III</span>
+      <span class="who">Edward Joseph Tatton III<em>et3.media ↗</em></span>
     </a>
     <nav aria-label="Primary">
       <ul>
@@ -289,7 +318,8 @@
       <p class="eyebrow">Design · Web · AI readiness</p>
       <h1>Good work,<span class="l2">made <em>legible</em>.</span></h1>
       <p class="lede">
-        ET3 Media is a small studio run by Edward Joseph Tatton III. I build websites and web
+        <a class="ext" href="https://et3.media" target="_blank" rel="noopener">ET3&nbsp;Media</a>
+        is a small studio run by Edward Joseph Tatton III. I build websites and web
         applications for small businesses, and I help institutions figure out what
         responsible AI use actually looks like in practice — policy, governance, and the
         unglamorous work of getting people ready.
@@ -339,6 +369,10 @@
           <li>Brand and print work: identity, layout, signage, event and marketing collateral</li>
           <li>Automation for the manual chores: intake, scheduling, invoicing, reporting</li>
         </ul>
+        <p class="studio-link">
+          Studio portfolio and instant quotes:
+          <a href="https://et3.media" target="_blank" rel="noopener">et3.media ↗</a>
+        </p>
       </article>
 
       <article class="track t-mag">
@@ -518,6 +552,27 @@
         <p class="lbl">Prefer email?</p>
         <p style="margin-top:.5rem"><a href="mailto:etatton@gmail.com">etatton@gmail.com</a></p>
       </div>
+
+      <div class="elsewhere">
+        <p class="lbl">Elsewhere</p>
+        <ul>
+          <li>
+            <a href="https://et3.media" target="_blank" rel="noopener">
+              <b>et3.media ↗</b><span>The studio — portfolio and instant quotes</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.linkedin.com/in/edtatton/" target="_blank" rel="noopener me">
+              <b>LinkedIn ↗</b><span>Connect professionally</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.instagram.com/2_weeks_on_mars" target="_blank" rel="noopener me">
+              <b>Instagram ↗</b><span>Or socially, at 2_weeks_on_mars</span>
+            </a>
+          </li>
+        </ul>
+      </div>
     </div>
 
     <form id="contact-form" novalidate>
@@ -562,7 +617,12 @@
 <footer>
   <div class="wrap foot">
     <p>© <span id="year">2026</span> ET3 Media · Edward Joseph Tatton III</p>
-    <p><a href="mailto:etatton@gmail.com">etatton@gmail.com</a></p>
+    <p class="foot-links">
+      <a href="https://et3.media" target="_blank" rel="noopener">et3.media</a>
+      <a href="https://www.linkedin.com/in/edtatton/" target="_blank" rel="noopener me">LinkedIn</a>
+      <a href="https://www.instagram.com/2_weeks_on_mars" target="_blank" rel="noopener me">Instagram</a>
+      <a href="mailto:etatton@gmail.com">Email</a>
+    </p>
   </div>
 </footer>
 
