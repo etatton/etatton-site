@@ -1,0 +1,17 @@
+
+# Secrets — never commit. Audited by beelink-bin/secret-exposure-check.sh.
+# Note: this stops a commit, NOT a deploy. A .env sitting next to index.html
+# is still uploaded by `wrangler pages deploy <dir>`, which ships the
+# directory rather than the git index.
+.env
+.env.*
+!.env.example
+.dev.vars
+.dev.vars.*
+!.dev.vars.example
+*.pem
+*.key
+secrets.json
+credentials.json
+.netrc
+.npmrc
