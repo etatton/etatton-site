@@ -1,0 +1,352 @@
+/* ──────────────────────────────────────────────────────────────────────
+   etatton.com — personal index page.
+   Editorial, calm, paper-and-ink. No build step, no dependencies.
+   ────────────────────────────────────────────────────────────────────── */
+
+:root{
+  --paper:#F7F3EC;
+  --paper-2:#EFE9DE;
+  --ink:#171614;
+  --ink-2:#4A4741;
+  --ink-3:#6F6B63;
+  --line:#DCD5C7;
+  --accent:#B8321A;
+  --accent-ink:#8F2613;
+  --accent-on:#FFFFFF;          /* text on an accent fill */
+
+  --font-display:"Instrument Serif",Georgia,"Times New Roman",serif;
+  --font-sans:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+
+  --max:1080px;
+  --gut:clamp(1.25rem,5vw,4rem);
+  --radius:6px;
+  --header-h:64px;
+}
+
+@media (prefers-color-scheme: dark){
+  :root{
+    --paper:#141311;
+    --paper-2:#1C1A17;
+    --ink:#F1ECE2;
+    --ink-2:#C9C2B4;
+    --ink-3:#9A937F;
+    --line:#2C2925;
+    --accent:#E8674C;
+    --accent-ink:#F08A74;
+    --accent-on:#141311;
+  }
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+
+html{ -webkit-text-size-adjust:100%; scroll-behavior:smooth; scroll-padding-top:calc(var(--header-h) + 1rem); }
+
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--font-sans);
+  font-size:17px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+@media (min-width:820px){ body{ font-size:18px; } }
+
+img{ max-width:100%; height:auto; }
+
+.wrap{ width:100%; max-width:var(--max); margin-inline:auto; padding-inline:var(--gut); }
+
+.sr-only{
+  position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+  overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0;
+}
+
+/* ── Typography ──────────────────────────────────────────────────────── */
+
+h1,h2,h3,h4{ font-family:var(--font-display); font-weight:400; line-height:1.12; margin:0; }
+
+h1{ font-size:clamp(2.3rem,7vw,3.6rem); letter-spacing:-.01em; }
+h2{ font-size:clamp(1.8rem,4.5vw,2.5rem); }
+h3{ font-size:clamp(1.3rem,3vw,1.6rem); }
+h4{ font-size:clamp(1.25rem,2.6vw,1.5rem); }
+
+p{ margin:0 0 1rem; }
+p:last-child{ margin-bottom:0; }
+
+.eyebrow{
+  font-family:var(--font-sans);
+  font-size:.8125rem; font-weight:600; letter-spacing:.09em; text-transform:uppercase;
+  color:var(--ink-3); margin:0 0 1rem;
+}
+
+.lede{ font-size:1.0625em; color:var(--ink-2); max-width:60ch; }
+.section-intro{ color:var(--ink-2); max-width:68ch; margin-top:1rem; }
+
+/* ── Links & buttons ─────────────────────────────────────────────────── */
+
+a{ color:var(--accent); text-decoration:underline; text-underline-offset:.18em; text-decoration-thickness:1px; }
+a:hover{ color:var(--accent-ink); }
+
+/* Touch targets. Vertical padding on an *inline* link grows the hit area and
+   the reported bounding box without changing line layout, which is how every
+   prose link here clears 40px on a phone. Elements that size themselves
+   (buttons, nav, brand, skip link) opt out. */
+a:where(:not(.btn,.brand,.skip)){ padding-block:.7rem; }
+
+.ext{ font-size:.85em; margin-left:.15em; text-decoration:none; display:inline-block; }
+
+.quiet-link{ color:var(--ink-2); text-decoration-color:var(--line); }
+.quiet-link:hover{ color:var(--ink); }
+
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:.35rem;
+  min-height:48px; padding:.6rem 1.15rem;
+  border:1px solid var(--accent); border-radius:var(--radius);
+  background:var(--accent); color:var(--accent-on);
+  font-family:var(--font-sans); font-size:1rem; font-weight:600; line-height:1.2;
+  text-decoration:none; cursor:pointer;
+  transition:background-color .15s ease, color .15s ease, border-color .15s ease, opacity .15s ease;
+}
+.btn:hover{ background:var(--accent-ink); border-color:var(--accent-ink); color:var(--accent-on); }
+.btn[disabled]{ opacity:.6; cursor:default; }
+
+.btn-secondary{
+  background:transparent; color:var(--ink); border-color:var(--ink-3);
+}
+.btn-secondary:hover{ background:var(--ink); color:var(--paper); border-color:var(--ink); }
+
+.linkish{
+  display:inline-flex; align-items:center; min-height:44px; padding:.5rem 0;
+  background:none; border:0; cursor:pointer;
+  font:inherit; color:var(--accent);
+  text-decoration:underline; text-underline-offset:.18em;
+}
+.linkish:hover{ color:var(--accent-ink); }
+
+:where(a,button,input,textarea,summary):focus-visible{
+  outline:3px solid var(--accent);
+  outline-offset:3px;
+  border-radius:3px;
+}
+
+.skip{
+  position:absolute; left:var(--gut); top:.5rem; z-index:100;
+  display:inline-flex; align-items:center; min-height:44px; padding:.5rem 1rem;
+  background:var(--paper); color:var(--ink);
+  border:1px solid var(--line); border-radius:var(--radius);
+  transform:translateY(-200%);
+  transition:transform .15s ease;
+}
+.skip:focus{ transform:translateY(0); }
+
+/* ── Header ──────────────────────────────────────────────────────────── */
+
+.site-header{
+  position:sticky; top:0; z-index:50;
+  background:color-mix(in srgb, var(--paper) 88%, transparent);
+  -webkit-backdrop-filter:blur(10px);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+}
+.header-inner{
+  min-height:var(--header-h);
+  display:flex; align-items:center; justify-content:space-between; gap:1rem;
+}
+
+.brand{
+  display:flex; flex-direction:column; justify-content:center;
+  min-height:48px; text-decoration:none; color:var(--ink);
+}
+.brand-name{ font-family:var(--font-display); font-size:1.35rem; line-height:1.1; }
+.brand-where{ font-size:.6875rem; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-3); }
+/* Below 480px the two-line place label made the sticky header ~130px tall; the
+   hero eyebrow already says Norwalk, so the label is hidden there, not wrapped. */
+@media (max-width:479px){ .brand-where{ display:none; } }
+
+/* Three items fit on a phone, so there is no hamburger to hunt for. */
+.site-nav{ display:flex; align-items:center; gap:clamp(.35rem,2.5vw,1rem); }
+.site-nav a{
+  display:inline-flex; align-items:center;
+  min-height:44px; padding-inline:.4rem;
+  color:var(--ink-2); font-size:.95rem; font-weight:500; text-decoration:none;
+  transition:color .15s ease;
+}
+.site-nav a:hover{ color:var(--accent); text-decoration:underline; text-underline-offset:.3em; }
+
+/* ── Sections ────────────────────────────────────────────────────────── */
+
+section{ padding-block:clamp(2.75rem,7vw,4.5rem); }
+section + section{ border-top:1px solid var(--line); }
+.hero{ padding-top:clamp(2rem,6vw,3.5rem); }
+
+/* ── Hero ────────────────────────────────────────────────────────────── */
+
+.hero-inner{ display:grid; gap:clamp(1.75rem,5vw,3rem); align-items:start; }
+@media (min-width:820px){
+  .hero-inner{ grid-template-columns:minmax(0,1.45fr) minmax(0,.75fr); align-items:center; }
+}
+
+.hero-text h1{ margin-bottom:1.1rem; }
+.hero-actions{
+  display:flex; flex-wrap:wrap; align-items:center; gap:.5rem 1.25rem;
+  margin-top:1.75rem;
+}
+.hero-actions .btn{ width:100%; }
+@media (min-width:560px){ .hero-actions .btn{ width:auto; } }
+
+.portrait{ margin:0; max-width:320px; }
+.portrait img{
+  display:block; width:100%; border-radius:var(--radius);
+  border:1px solid var(--line);
+}
+.portrait figcaption{
+  margin-top:.6rem; font-size:.8125rem; color:var(--ink-3); line-height:1.45;
+}
+
+/* ── Projects ────────────────────────────────────────────────────────── */
+
+.group-h{
+  margin-top:clamp(2.25rem,5vw,3rem); margin-bottom:1rem;
+  font-style:italic; color:var(--ink-2);
+}
+
+.cards{ list-style:none; margin:0; padding:0; display:grid; gap:1.1rem; }
+@media (min-width:820px){
+  .cards-a{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .cards-b{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+@media (min-width:1024px){
+  .cards-b{ grid-template-columns:repeat(3,minmax(0,1fr)); }
+}
+
+.card{
+  display:flex; flex-direction:column;
+  background:var(--paper-2);
+  border:1px solid var(--line);
+  border-left:4px solid var(--card-accent,var(--line));
+  border-radius:var(--radius);
+  padding:1.25rem clamp(1.1rem,3vw,1.5rem) 1.35rem;
+}
+
+.card-label{
+  display:flex; align-items:center; gap:.5rem;
+  margin:0 0 .5rem;
+  font-size:.75rem; font-weight:600; letter-spacing:.08em; text-transform:uppercase;
+  color:var(--ink-3);
+}
+.dot{
+  flex:none; width:8px; height:8px; border-radius:50%;
+  background:var(--card-accent,var(--ink-3));
+}
+
+.card-name{ margin-bottom:.6rem; }
+.card-what{ color:var(--ink); }
+.card-why{ color:var(--ink-2); font-size:.9375em; }
+.card-action{ margin-top:auto; padding-top:.75rem; }
+.card-action .btn{ width:100%; }
+@media (min-width:560px){ .card-action .btn{ width:auto; } }
+
+.no-link{ color:var(--ink-3); font-size:.875em; font-style:italic; }
+
+.logo-chip{
+  display:inline-block; align-self:flex-start; margin:0 0 .9rem;
+  padding:.5rem .75rem; border-radius:var(--radius);
+  background:#0A0612;
+}
+.logo-chip img{ display:block; width:120px; height:auto; }
+
+/* ── About ───────────────────────────────────────────────────────────── */
+
+.about-inner{ display:grid; gap:clamp(1.75rem,4vw,3rem); align-items:start; }
+@media (min-width:820px){
+  .about-inner{ grid-template-columns:minmax(0,1.6fr) minmax(0,.8fr); }
+}
+.about-text h2{ margin-bottom:1.1rem; }
+.about-text p{ color:var(--ink-2); max-width:68ch; }
+
+.facts{ margin:0; padding:0; border-top:1px solid var(--line); }
+.fact{
+  display:grid; gap:.15rem;
+  padding-block:.85rem; border-bottom:1px solid var(--line);
+}
+@media (min-width:560px){
+  .fact{ grid-template-columns:8rem minmax(0,1fr); gap:1rem; align-items:baseline; }
+}
+.facts dt{
+  font-size:.75rem; font-weight:600; letter-spacing:.08em; text-transform:uppercase;
+  color:var(--ink-3);
+}
+.facts dd{ margin:0; color:var(--ink-2); }
+
+/* ── Contact ─────────────────────────────────────────────────────────── */
+
+.contact-inner{ display:grid; gap:clamp(1.75rem,4vw,3rem); align-items:start; }
+@media (min-width:820px){
+  .contact-inner{ grid-template-columns:minmax(0,1fr) minmax(0,1fr); }
+}
+.contact-intro h2{ margin-bottom:1.1rem; }
+.contact-intro > p{ color:var(--ink-2); max-width:60ch; }
+.fineprint{ font-size:.9375em; }
+
+.field{ display:grid; gap:.35rem; margin:0 0 1.1rem; }
+.field label{ font-size:.875rem; font-weight:600; color:var(--ink-2); }
+.field input,
+.field textarea{
+  width:100%; min-height:48px; padding:.7rem .8rem;
+  font:inherit; font-size:1rem; color:var(--ink);
+  background:var(--paper-2);
+  border:1px solid var(--line); border-radius:var(--radius);
+  transition:border-color .15s ease;
+}
+.field textarea{ resize:vertical; line-height:1.55; }
+.field input:hover,
+.field textarea:hover{ border-color:var(--ink-3); }
+
+/* Honeypot: off-screen but focusable only by a bot that ignores tabindex. */
+.hp{ position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden; }
+
+.form-actions{ margin:1.25rem 0 0; }
+.form-actions .btn{ width:100%; }
+@media (min-width:560px){ .form-actions .btn{ width:auto; min-width:12rem; } }
+
+.status{ margin-top:.9rem; font-size:.9375em; }
+.status:empty{ margin-top:0; }
+.status.err{ color:var(--accent-ink); }
+.status.ok{ color:var(--ink-2); }
+
+.notice{
+  padding:.9rem 1rem; margin-bottom:1.25rem;
+  border:1px solid var(--line); border-left:4px solid var(--accent);
+  border-radius:var(--radius); background:var(--paper-2);
+  font-size:.9375em;
+}
+
+.sent-card{
+  padding:clamp(1.25rem,4vw,1.75rem);
+  background:var(--paper-2);
+  border:1px solid var(--line); border-left:4px solid var(--accent);
+  border-radius:var(--radius);
+}
+.sent-card h3{ margin-bottom:.6rem; }
+.sent-card p{ color:var(--ink-2); }
+.sent-card[hidden]{ display:none; }
+
+/* ── Footer ──────────────────────────────────────────────────────────── */
+
+.site-footer{ border-top:1px solid var(--line); padding-block:2rem 2.5rem; }
+.footer-inner{
+  display:flex; flex-wrap:wrap; gap:.25rem 1.5rem;
+  align-items:center; justify-content:space-between;
+}
+.copy{ margin:0; font-size:.875rem; color:var(--ink-3); }
+.footer-links{ margin:0; display:flex; flex-wrap:wrap; gap:.25rem 1.25rem; font-size:.875rem; }
+
+/* ── Motion ──────────────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior:auto; }
+  *,*::before,*::after{
+    animation-duration:.001ms !important; animation-iteration-count:1 !important;
+    transition-duration:.001ms !important; scroll-behavior:auto !important;
+  }
+}
