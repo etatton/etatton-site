@@ -56,6 +56,8 @@ tests/weight.test.mjs    node --test: html + css + js + fonts < 600 KB (prints t
 tests/contrast.test.mjs  node --test: WCAG ratios computed from the tokens in styles.css
 tests/visual.mjs         Playwright: 360/390/1280/1600 — overflow, tap targets, type size, the header
                          hairline, the reveal, and the no-JS state (needs a local server)
+tests/shoot-feature.mjs  Playwright: shoot a live site at 1600×1000 into assets/feature-<slot>.jpg and swap
+                         the <img> into the matching data-slot figure (placard → image; image → refresh)
 _headers                 security headers; /api/* no-store
 robots.txt · sitemap.xml
 ```
@@ -64,8 +66,8 @@ robots.txt · sitemap.xml
 
 | slot | file | size | notes |
 |---|---|---|---|
-| 01 The Norwalk Sound feature | `assets/feature-norwalk-sound.jpg` | 1600×1000 (16:10), JPEG q70–80, ≤ 250 KB | the daily brief or masthead at 1600 wide; swap markup is the HTML comment above the figure |
-| 02 Nothing To See Here feature | `assets/feature-nothing-to-see-here.jpg` | 1600×1000 (16:10) | in place; re-shoot when THE TAB moves far from $10.1M |
+| 01 The Norwalk Sound feature | `assets/feature-norwalk-sound.jpg` | 1600×1000 (16:10), JPEG q70 | **not yet shot** — the live site is unreachable from the build sandbox and the repo renders from a database that lives only on Ed's box (a fixture build shows fake test content, so it was not used). Run `tests/shoot-feature.mjs norwalk-sound https://thenorwalksound.com/` anywhere with Chromium + Playwright + internet; it writes the file AND swaps the `<img>` into the `data-slot="norwalk-sound"` figure |
+| 02 Nothing To See Here feature | `assets/feature-nothing-to-see-here.jpg` | 1600×1000 (16:10) | in place; re-shoot with `tests/shoot-feature.mjs nothing-to-see-here https://nothingtosee.fyi/` when THE TAB moves far from $10.1M |
 | Hero portrait | `assets/edward-tatton.jpg` | ≥ 1200×1500 (4:5), JPEG | current file is 400×400 and is being cropped to 4:5; a larger original will sharpen it |
 | 03 ChewyDown artifact | `assets/chewydown-logo.png` | in place (288×142) | a 2× version (576×284) or an SVG would be crisper on retina |
 | OG image | `assets/og.png` | 1200×630 | generated; regenerate if the name or dek changes |
@@ -77,6 +79,7 @@ python3 -m http.server 8787          # local preview at http://localhost:8787/
 npm test                             # contact function tests, no deps
 PLAYWRIGHT_BROWSERS_PATH=/opt/pw-browsers NODE_PATH=$(npm root -g) \
   node tests/visual.mjs http://localhost:8787/ [out-dir]   # screenshots default OUTSIDE the repo
+NODE_PATH=$(npm root -g) node tests/shoot-feature.mjs norwalk-sound https://thenorwalksound.com/   # then review git diff + the JPEG, commit
 npx wrangler pages deploy .          # deploy (needs CLOUDFLARE_API_TOKEN)
 ```
 
