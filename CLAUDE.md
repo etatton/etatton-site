@@ -11,7 +11,7 @@ linked out. It is not the studio site (that is et3.media) and not a résumé.
 | domain | `etatton.com` / `www.etatton.com` |
 | hosting | Cloudflare Pages, static, **no build step** — the repo root is the deploy directory |
 | contact mail | `functions/api/contact.js` → Service binding `MAILER` → private `etatton-mailer` Worker |
-| fonts | Google Fonts (Instrument Serif + Inter), the only third-party request |
+| fonts | **self-hosted** in `assets/fonts/` (Fraunces normal + italic, Inter; ~197 KB). There is now **no third-party request at all** |
 
 ## Hard rules
 
@@ -28,28 +28,55 @@ linked out. It is not the studio site (that is et3.media) and not a résumé.
   tri-state, with DJ Big Mike). The card links to chewydown.com; keep the name spelled ChewyDown.
 - **Every interactive target is ≥ 44px tall, body text ≥ 17px, focus rings visible, reduced motion
   honoured.** `tests/visual.mjs` measures the first two.
+- **The page is dark only.** Ground `#141311`, one `theme-color`, `color-scheme:dark`. There is no
+  light scheme and no `prefers-color-scheme` block; `tests/markup.test.mjs` enforces that.
+- **No third-party request.** Fonts are self-hosted; `tests/markup.test.mjs` fails on any external
+  host, `@import`, or absolute `url()` in the CSS.
+- **The copy is frozen.** `tests/copy.test.mjs` pulls `git show origin/main:index.html` and asserts
+  every visible string is still on the page. If it goes red, fix the page — never the test.
+- **Contrast is computed, not asserted by hand.** `tests/contrast.test.mjs` parses the tokens out of
+  `styles.css` and composites the translucent ones; `--fg-3` is large-text/non-text only.
 
 ## Layout
 
 ```
-index.html               the one page: header · hero · projects · about · contact · footer
-styles.css               tokens (light + dark), layout, components
-main.js                  contact form submit (fetch → success card; error keeps input + mailto fallback), year
-assets/                  portrait, ET3 logo, og.png (1200×630)
+index.html               the one page: header · hero · projects (one <ol>, three tiers) · pull quote ·
+                         about · contact · footer. A 1px #scroll-sentinel and an inline head script
+                         (sets html.js before paint, with a failsafe that removes it if main.js never runs)
+styles.css               @font-face, dark-only tokens, the 12-column .wrap grid, components
+main.js                  year, header-hairline observer, section reveal observer, contact form submit
+                         (fetch → success card; error keeps input + mailto fallback)
+assets/                  portrait, ET3 logo, ChewyDown logo, og.png (1200×630), fonts/
+assets/fonts/            fraunces-normal-latin · fraunces-italic-latin · inter-normal-latin (woff2)
 functions/api/contact.js Pages Function: validation, honeypot, MAILER service binding
 tests/contact.test.mjs   node --test: validation, honeypot, missing binding, mailer 200/500, GET 405
-tests/markup.test.mjs    node --test: in-page anchors resolve, assets exist, rel=noopener, only Google Fonts third-party
-tests/visual.mjs         Playwright: screenshots, overflow, tap targets, font size (needs a local server)
+tests/copy.test.mjs      node --test: the copy freeze, against origin/main out of git
+tests/markup.test.mjs    node --test: anchors, assets, fonts, rel=noopener + aria-label, no third party
+tests/weight.test.mjs    node --test: html + css + js + fonts < 600 KB (prints the breakdown)
+tests/contrast.test.mjs  node --test: WCAG ratios computed from the tokens in styles.css
+tests/visual.mjs         Playwright: 360/390/1280/1600 — overflow, tap targets, type size, the header
+                         hairline, the reveal, and the no-JS state (needs a local server)
 _headers                 security headers; /api/* no-store
 robots.txt · sitemap.xml
 ```
+
+## Assets still to supply (exact sizes)
+
+| slot | file | size | notes |
+|---|---|---|---|
+| 01 The Norwalk Sound feature | `assets/feature-norwalk-sound.jpg` | 1600×1000 (16:10), JPEG q70–80, ≤ 250 KB | the daily brief or masthead at 1600 wide; swap markup is the HTML comment above the figure |
+| 02 Nothing To See Here feature | `assets/feature-nothing-to-see-here.jpg` | 1600×1000 (16:10) | in place; re-shoot when THE TAB moves far from $10.1M |
+| Hero portrait | `assets/edward-tatton.jpg` | ≥ 1200×1500 (4:5), JPEG | current file is 400×400 and is being cropped to 4:5; a larger original will sharpen it |
+| 03 ChewyDown artifact | `assets/chewydown-logo.png` | in place (288×142) | a 2× version (576×284) or an SVG would be crisper on retina |
+| OG image | `assets/og.png` | 1200×630 | generated; regenerate if the name or dek changes |
 
 ## Everyday commands
 
 ```bash
 python3 -m http.server 8787          # local preview at http://localhost:8787/
 npm test                             # contact function tests, no deps
-NODE_PATH=$(npm root -g) node tests/visual.mjs   # screenshots + layout assertions against :8787
+PLAYWRIGHT_BROWSERS_PATH=/opt/pw-browsers NODE_PATH=$(npm root -g) \
+  node tests/visual.mjs http://localhost:8787/ [out-dir]   # screenshots default OUTSIDE the repo
 npx wrangler pages deploy .          # deploy (needs CLOUDFLARE_API_TOKEN)
 ```
 
@@ -62,3 +89,17 @@ npx wrangler pages deploy .          # deploy (needs CLOUDFLARE_API_TOKEN)
   per-project accent marks, light + dark). Nav cut to three items, contact form cut to three fields with
   a real completion state. Added contact-function tests and a Playwright layout check. Design rationale
   follows the UX-law brief Ed supplied (Hick, Fitts, proximity, serial position, peak-end).
+
+- **2026-09-14 — visual refresh: "civic editorial".** Dark only (`#141311`), light scheme removed.
+  Google Fonts replaced by self-hosted Fraunces + Inter (`@font-face`, `font-display:swap`,
+  `unicode-range`, two preloads) — the page now makes no third-party request and weighs 245 KB
+  before images. New twelve-column `.wrap` grid inside wide outer margins, hairlines instead of
+  cards. The four uniform card grids became ONE `<ol class="projects-list">` in three CSS tiers:
+  two full-width zig-zag leads (02 carries a real 1600×1000 screenshot of nothingtosee.fyi built
+  from its repo that day, THE TAB at $10.1M; 01 is a type-only placard until Ed supplies a Sound
+  screenshot — the swap markup is in an HTML comment), a two-up studio/side-business row with logo
+  plates, and a three-column private ledger. Numbers 01–07 and section eyebrows added; "↗" + the sr-only
+  "(opens …)" strings replaced by a "→" and an `aria-label` naming the host. A pull quote repeats
+  one sentence from About, on purpose. Contact inputs are bottom-rule only with a two-row routes
+  ledger above the unchanged fineprint. Header hairline appears on scroll; sections reveal on
+  intersection, motion-query gated. Copy frozen and enforced by `tests/copy.test.mjs`.
