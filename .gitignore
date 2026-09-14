@@ -15,3 +15,6 @@ secrets.json
 credentials.json
 .netrc
 .npmrc
+
+# Screenshots from tests/visual.mjs — never ship (wrangler deploys the directory)
+shot-*.png

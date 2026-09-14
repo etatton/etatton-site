@@ -3,767 +3,328 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ET3 Media — Design, Web &amp; AI Readiness | Edward Joseph Tatton III</title>
-<meta name="description" content="ET3 Media is Edward Joseph Tatton III's design and web studio for small businesses, plus AI governance and readiness advisory for institutions. Norwalk, Connecticut. Working remotely nationwide.">
+<title>Ed Tatton — designer and builder in Norwalk, Connecticut</title>
+<meta name="description" content="Ed Tatton builds a daily civic brief for Norwalk, a sourced ledger of surveillance-tech failures, a design studio, a DJ project and private tools for family and self. This page is the index.">
 <meta name="author" content="Edward Joseph Tatton III">
 <link rel="canonical" href="https://etatton.com/">
+<meta name="theme-color" content="#F7F3EC" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#141311" media="(prefers-color-scheme: dark)">
 
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://etatton.com/">
-<meta property="og:title" content="ET3 Media — Design, Web &amp; AI Readiness">
-<meta property="og:description" content="A design and web studio for small businesses, and AI governance advisory for institutions.">
-<meta property="og:image" content="https://etatton.com/assets/edward-tatton.jpg">
+<meta property="og:site_name" content="Ed Tatton">
+<meta property="og:title" content="Ed Tatton — designer and builder in Norwalk, Connecticut">
+<meta property="og:description" content="A daily civic brief for Norwalk, a sourced ledger of surveillance-tech failures, a design studio, a DJ project and private tools for family and self. This page is the index.">
+<meta property="og:image" content="https://etatton.com/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Ed Tatton — designer and builder, Norwalk, Connecticut.">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Ed Tatton — designer and builder in Norwalk, Connecticut">
+<meta name="twitter:description" content="A daily civic brief for Norwalk, a sourced ledger of surveillance-tech failures, a design studio, a DJ project and private tools for family and self.">
+<meta name="twitter:image" content="https://etatton.com/assets/og.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='16' fill='%230a0612'/><text y='62' x='50' text-anchor='middle' font-size='34' font-family='Verdana,sans-serif' font-weight='bold' fill='%2300F0FF'>ET3</text></svg>">
+<!-- Favicon: ink "ET" monogram on paper, rounded 16. Inline data URI so the
+     page makes no extra request for it. -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='16' fill='%23F7F3EC'/><text y='66' x='50' text-anchor='middle' font-size='44' font-family='Georgia,serif' fill='%23171614'>ET</text></svg>">
+
+<link rel="stylesheet" href="/styles.css">
 
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "ProfessionalService",
-  "name": "ET3 Media",
+  "@type": "Person",
+  "name": "Edward Joseph Tatton III",
+  "alternateName": "Ed Tatton",
   "url": "https://etatton.com/",
   "image": "https://etatton.com/assets/edward-tatton.jpg",
+  "jobTitle": "Designer and builder",
   "email": "etatton@gmail.com",
-  "areaServed": "US",
-  "founder": { "@type": "Person", "name": "Edward Joseph Tatton III" },
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Norwalk",
+    "addressRegion": "CT",
+    "addressCountry": "US"
+  },
   "sameAs": [
     "https://et3.media",
     "https://www.linkedin.com/in/edtatton/",
-    "https://www.instagram.com/2_weeks_on_mars"
-  ],
-  "address": { "@type": "PostalAddress", "addressLocality": "Norwalk", "addressRegion": "CT", "addressCountry": "US" }
+    "https://www.instagram.com/2_weeks_on_mars",
+    "https://thenorwalksound.com",
+    "https://nothingtosee.fyi",
+    "https://www.chewydown.com"
+  ]
 }
 </script>
-
-<style>
-  :root{
-    /* ET3 palette, adapted for a light editorial base */
-    --void:#0a0612; --void-2:#150828; --terminal-2:#1a0d33;
-    --cyan:#00F0FF; --et3-blue:#27AAE1; --magenta:#FF2D8B; --hot-yellow:#F5E642; --violet:#B14CFF;
-    --cream:#FBF7EC; --cream-2:#F4ECD8; --cream-dim:#c6bea8;
-
-    --ink:#10131c; --ink-2:#3f4453; --ink-3:#6d7284;
-    --line:#e0d8c4;
-    --accent:#C4165F;          /* magenta, deepened for text contrast on cream */
-    --accent-2:#1b7fa8;        /* et3 blue, deepened for text contrast */
-
-    --font-display:"Audiowide",system-ui,sans-serif;
-    --font-sans:"Space Grotesk",ui-sans-serif,system-ui,sans-serif;
-    --font-mono:"Space Mono",ui-monospace,monospace;
-
-    --max:1160px; --gut:clamp(1.5rem,5vw,4.5rem);
-  }
-  *,*::before,*::after{box-sizing:border-box}
-  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
-  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}
-    *{animation-duration:.01ms!important;transition-duration:.01ms!important}}
-  body{
-    margin:0;background:var(--cream);color:var(--ink);
-    font-family:var(--font-sans);
-    font-size:clamp(1rem,.96rem + .18vw,1.075rem);line-height:1.65;
-    -webkit-font-smoothing:antialiased;
-  }
-  h1,h2,h3{font-family:var(--font-sans);font-weight:700;letter-spacing:-.02em;line-height:1.08;margin:0}
-  p{margin:0}
-  a{color:inherit}
-  img{max-width:100%;display:block}
-  .wrap{max-width:var(--max);margin-inline:auto;padding-inline:var(--gut)}
-
-  /* ---------- parallax background (Option A — grid horizon) ----------
-     Layers are fixed and GPU-composited. The grids translate by
-     (scroll x speed) MODULO their tile size, so the offset never grows
-     beyond one tile and the pattern can never run off a long page.
-     The glow is driven by scroll progress instead, over a bounded range. */
-  #bg{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
-  #bg .layer{position:absolute;inset:-320px -6%;will-change:transform}
-  .px-fine{
-    background-image:linear-gradient(rgba(39,170,225,.13) 1px,transparent 1px),
-                     linear-gradient(90deg,rgba(39,170,225,.13) 1px,transparent 1px);
-    background-size:64px 64px;
-  }
-  .px-coarse{
-    background-image:linear-gradient(rgba(196,22,95,.10) 1px,transparent 1px),
-                     linear-gradient(90deg,rgba(196,22,95,.10) 1px,transparent 1px);
-    background-size:256px 256px;
-  }
-  .px-sun{
-    inset:auto -10% -30% -10%;height:120vh;
-    background:radial-gradient(closest-side,rgba(245,230,66,.16),rgba(255,45,139,.09) 55%,transparent 72%);
-  }
-  main,footer{position:relative;z-index:1}
-  @media (prefers-reduced-motion:reduce){#bg .layer{transform:none!important}}
-
-  /* // eyebrow — ET3 signature */
-  .eyebrow{
-    font-family:var(--font-mono);font-size:.75rem;letter-spacing:.16em;text-transform:uppercase;
-    color:var(--ink-3);margin-bottom:1.5rem;display:flex;align-items:center;gap:.55rem;
-  }
-  .eyebrow::before{content:"//";color:var(--accent);font-weight:700}
-
-  .skip{position:absolute;left:-9999px;top:0;background:var(--ink);color:var(--cream);padding:.75rem 1.25rem;z-index:100}
-  .skip:focus{left:0}
-
-  /* header */
-  header{position:sticky;top:0;z-index:50;background:rgba(251,247,236,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-  .nav{display:flex;align-items:center;justify-content:space-between;gap:2rem;height:4.6rem}
-  /* The ET3 mark is pure cyan on transparent — unreadable on cream, so it sits
-     in a dark lockup chip that preserves the brand colour and the contrast. */
-  .brand{display:flex;align-items:center;gap:.85rem;text-decoration:none;white-space:nowrap}
-  .brand .chip{background:var(--void);border-radius:3px;padding:.55rem .8rem;display:flex;align-items:center;
-    box-shadow:3px 3px 0 var(--magenta);transition:transform .14s ease,box-shadow .14s ease}
-  .brand:hover .chip{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--magenta)}
-  .brand .chip img{height:30px;width:auto}
-  .brand span.who{font-family:var(--font-mono);font-size:.63rem;letter-spacing:.13em;text-transform:uppercase;
-    color:var(--ink-3);line-height:1.3;white-space:nowrap;display:flex;flex-direction:column;gap:.15rem}
-  .brand span.who em{font-style:normal;color:var(--accent-2);font-size:.6rem;letter-spacing:.1em}
-  .brand:hover span.who em{color:var(--accent)}
-  @media (max-width:560px){.brand span.who{display:none}}
-
-  /* inline + listed external links */
-  a.ext{color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(196,22,95,.35);
-    transition:border-color .18s,color .18s}
-  a.ext:hover{border-bottom-color:var(--accent)}
-  a.ext::after{content:" ↗";font-size:.85em;letter-spacing:0}
-
-  .track .studio-link{margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid var(--line);
-    font-family:var(--font-mono);font-size:.78rem;letter-spacing:.06em}
-  .track .studio-link a{color:var(--accent-2);text-decoration:none;border-bottom:1px solid rgba(27,127,168,.4)}
-  .track .studio-link a:hover{border-bottom-color:var(--accent-2)}
-
-  .elsewhere{border-top:1px solid rgba(255,255,255,.14);margin-top:2rem;padding-top:2rem}
-  .elsewhere ul{list-style:none;margin:1rem 0 0;padding:0;display:flex;flex-direction:column;gap:.9rem}
-  .elsewhere a{display:flex;align-items:baseline;gap:.7rem;text-decoration:none;color:var(--cream);
-    font-family:var(--font-mono);font-size:.88rem}
-  .elsewhere a b{color:var(--cyan);font-weight:700;letter-spacing:.06em;border-bottom:1px solid transparent;transition:border-color .18s}
-  .elsewhere a:hover b{border-bottom-color:var(--cyan)}
-  .elsewhere a span{color:#b3aac6;font-size:.8rem;font-family:var(--font-sans);letter-spacing:0}
-  .nav ul{display:flex;gap:2rem;list-style:none;margin:0;padding:0}
-  .nav a.navlink{
-    font-family:var(--font-mono);text-decoration:none;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;
-    color:var(--ink-2);padding-bottom:3px;border-bottom:2px solid transparent;transition:border-color .2s,color .2s;
-  }
-  .nav a.navlink:hover{color:var(--ink);border-bottom-color:var(--magenta)}
-  @media (max-width:900px){.nav ul{display:none}}
-
-  /* buttons — hard offset shadow, ET3 signature */
-  .btn{
-    display:inline-flex;align-items:center;gap:.6rem;
-    font-family:var(--font-mono);font-size:.82rem;font-weight:700;letter-spacing:.11em;text-transform:uppercase;
-    background:var(--ink);color:var(--cream);text-decoration:none;padding:.95rem 1.6rem;border:2px solid var(--ink);
-    border-radius:2px;cursor:pointer;box-shadow:5px 5px 0 var(--magenta);
-    transition:transform .14s ease, box-shadow .14s ease, background .18s, color .18s;
-  }
-  .btn:hover{transform:translate(2px,2px);box-shadow:3px 3px 0 var(--magenta)}
-  .btn-ghost{background:transparent;color:var(--ink);box-shadow:5px 5px 0 var(--et3-blue)}
-  .btn-ghost:hover{box-shadow:3px 3px 0 var(--et3-blue)}
-
-  /* hero */
-  .hero{padding:clamp(3.25rem,7vw,5.75rem) 0 clamp(3rem,6vw,4.75rem)}
-  .hero-grid{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,.95fr);gap:clamp(2rem,6vw,4.5rem);align-items:center}
-  @media (max-width:880px){.hero-grid{grid-template-columns:1fr;gap:2.5rem}.hero-photo{order:-1;max-width:250px}}
-  .hero h1{font-size:clamp(2.3rem,5.4vw,4rem);margin-bottom:1.75rem;text-transform:uppercase;letter-spacing:-.025em}
-  .hero h1 .l2{display:block}
-  .hero h1 em{font-style:normal;color:var(--accent)}
-  .hero .lede{font-size:clamp(1.02rem,.98rem + .45vw,1.22rem);color:var(--ink-2);max-width:52ch;line-height:1.62}
-  .hero-actions{display:flex;flex-wrap:wrap;gap:1.15rem;align-items:center;margin-top:2.5rem}
-  .avail{display:inline-flex;align-items:center;gap:.55rem;font-family:var(--font-mono);font-size:.75rem;
-    letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
-  .dot{width:8px;height:8px;border-radius:50%;background:#17b978;box-shadow:0 0 0 3px rgba(23,185,120,.2)}
-
-  /* photo: square, bracketed */
-  .hero-photo figure{margin:0}
-  /* border + offset shadow live on the wrapper: a filter on the <img> would
-     desaturate its own box-shadow along with the photo. */
-  .photo-frame{
-    position:relative;line-height:0;border:2px solid var(--ink);border-radius:2px;
-    box-shadow:9px 9px 0 var(--et3-blue);
-  }
-  .photo-frame img{
-    width:100%;aspect-ratio:1/1;height:auto;object-fit:cover;object-position:center 28%;
-    filter:grayscale(100%) contrast(1.05);
-  }
-  .photo-frame::after{
-    content:"";position:absolute;right:-9px;bottom:-9px;width:34px;height:34px;
-    border-right:3px solid var(--magenta);border-bottom:3px solid var(--magenta);pointer-events:none;
-  }
-  .hero-photo figcaption{margin-top:1.7rem;font-size:.85rem;color:var(--ink-3);line-height:1.55}
-  .hero-photo figcaption b{display:block;font-family:var(--font-mono);font-size:.8rem;letter-spacing:.09em;
-    text-transform:uppercase;color:var(--ink);font-weight:700;margin-bottom:.35rem}
-
-  section{padding:clamp(3.5rem,7vw,5.75rem) 0}
-  .sec-head{max-width:62ch;margin-bottom:clamp(2.25rem,4.5vw,3.25rem)}
-  .sec-head h2{font-size:clamp(1.75rem,3.2vw,2.5rem);margin-bottom:1.05rem;text-transform:uppercase;letter-spacing:-.02em}
-  .sec-head p{color:var(--ink-2);font-size:1.04rem}
-
-  /* two tracks — bracketed cards */
-  .tracks{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:clamp(1.25rem,2.5vw,1.9rem)}
-  .track{position:relative;background:rgba(255,255,255,.86);border:2px solid var(--ink);border-radius:2px;padding:clamp(1.8rem,3.4vw,2.6rem)}
-  .track::before,.track::after{content:"";position:absolute;width:22px;height:22px;pointer-events:none}
-  .track::before{top:-2px;left:-2px;border-top:4px solid var(--c);border-left:4px solid var(--c)}
-  .track::after{bottom:-2px;right:-2px;border-bottom:4px solid var(--c);border-right:4px solid var(--c)}
-  .track.t-cyan{--c:var(--et3-blue)}
-  .track.t-mag{--c:var(--magenta)}
-  .track-tag{
-    display:inline-block;font-family:var(--font-mono);font-size:.68rem;font-weight:700;letter-spacing:.14em;
-    text-transform:uppercase;color:var(--ink);background:var(--c);padding:.36rem .7rem;border-radius:2px;margin-bottom:1.35rem;
-  }
-  .track h3{font-size:clamp(1.3rem,2vw,1.6rem);margin-bottom:.85rem;text-transform:uppercase}
-  .track > p{color:var(--ink-2);font-size:1rem}
-  .track ul{list-style:none;margin:1.5rem 0 0;padding:0}
-  .track li{position:relative;padding-left:1.5rem;margin-bottom:.8rem;color:var(--ink-2);font-size:.95rem}
-  .track li::before{content:"▸";position:absolute;left:0;top:-.02em;color:var(--c);font-size:.9rem}
-
-  /* work */
-  .work-item{display:grid;grid-template-columns:minmax(0,8rem) minmax(0,1fr);gap:clamp(1.25rem,4vw,3.25rem);
-    padding:clamp(2rem,4vw,2.8rem) 0;border-bottom:1px solid var(--line)}
-  .work-item:first-of-type{border-top:1px solid var(--line)}
-  .work-meta{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.13em;text-transform:uppercase;color:var(--accent);padding-top:.55rem}
-  .work-body h3{font-size:clamp(1.3rem,2.2vw,1.75rem);margin-bottom:.9rem;text-transform:uppercase}
-  .work-body p{color:var(--ink-2);max-width:64ch}
-  .tags{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.4rem;list-style:none;padding:0}
-  .tags li{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-2);
-    border:1px solid var(--line);padding:.34rem .7rem;border-radius:2px;background:var(--cream-2)}
-  @media (max-width:640px){.work-item{grid-template-columns:1fr;gap:.75rem}.work-meta{padding-top:0}}
-
-  /* process — 2x2, progressive disclosure */
-  .process{background:rgba(244,236,216,.72);border-block:1px solid var(--line)}
-  .steps{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(1rem,2vw,1.4rem);align-items:start}
-  @media (max-width:720px){.steps{grid-template-columns:1fr}}
-  .step{
-    background:rgba(251,247,236,.92);border:2px solid var(--ink);border-radius:2px;
-    transition:box-shadow .18s ease, transform .18s ease;
-  }
-  .step[open]{box-shadow:6px 6px 0 var(--et3-blue)}
-  .step summary{
-    list-style:none;cursor:pointer;padding:1.4rem clamp(1.2rem,2.4vw,1.7rem);
-    display:flex;align-items:center;gap:1rem;
-  }
-  .step summary::-webkit-details-marker{display:none}
-  .step summary .n{font-family:var(--font-display);font-size:1rem;color:var(--accent-2);flex:0 0 auto}
-  .step summary h3{font-size:1.08rem;text-transform:uppercase;letter-spacing:-.01em;flex:1 1 auto}
-  .step summary .chev{
-    flex:0 0 auto;width:20px;height:20px;position:relative;transition:transform .22s ease;
-  }
-  .step summary .chev::before,.step summary .chev::after{
-    content:"";position:absolute;background:var(--magenta);border-radius:1px;
-  }
-  .step summary .chev::before{top:9px;left:2px;width:16px;height:2.5px}
-  .step summary .chev::after{top:2px;left:8.75px;width:2.5px;height:16px;transition:opacity .22s ease}
-  .step[open] summary .chev{transform:rotate(180deg)}
-  .step[open] summary .chev::after{opacity:0}
-  .step .body{padding:0 clamp(1.2rem,2.4vw,1.7rem) 1.5rem;color:var(--ink-2);font-size:.96rem}
-  .step:hover{box-shadow:6px 6px 0 var(--et3-blue)}
-  .step summary:focus-visible{outline:2px solid var(--accent);outline-offset:-4px}
-
-  /* about */
-  .about-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr);gap:clamp(2rem,6vw,5rem);align-items:start}
-  @media (max-width:820px){.about-grid{grid-template-columns:1fr}}
-  .about-body{color:var(--ink-2);font-size:1.05rem}
-  .about-body p + p{margin-top:1.25rem}
-  .facts{list-style:none;margin:2.25rem 0 0;padding:0;border-top:2px solid var(--ink)}
-  .facts li{display:flex;justify-content:space-between;gap:1.5rem;padding:.85rem 0;border-bottom:1px solid var(--line);font-size:.92rem}
-  .facts .k{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);flex:0 0 auto;padding-top:.25rem}
-  .facts .v{text-align:right}
-
-  /* contact — ET3 void */
-  .contact{background:var(--void-2);color:var(--cream);
-    background-image:linear-gradient(rgba(0,240,255,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(0,240,255,.055) 1px,transparent 1px);
-    background-size:52px 52px}
-  .contact h2{color:var(--cream)}
-  .contact .eyebrow{color:var(--cream-dim)}
-  .contact .eyebrow::before{color:var(--magenta)}
-  .contact .sec-head p{color:#b3aac6}
-  .contact-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:clamp(2.5rem,6vw,5rem);align-items:start}
-  @media (max-width:820px){.contact-grid{grid-template-columns:1fr}}
-  .field{margin-bottom:1.4rem}
-  .field label{display:block;font-family:var(--font-mono);font-size:.72rem;letter-spacing:.13em;text-transform:uppercase;color:var(--cyan);margin-bottom:.55rem}
-  .field input,.field textarea,.field select{width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(0,240,255,.28);
-    color:var(--cream);font-family:inherit;font-size:1rem;padding:.8rem .9rem;border-radius:2px;transition:border-color .2s}
-  .field select option{background:var(--void-2);color:var(--cream)}
-  .field textarea{resize:vertical;min-height:7rem;line-height:1.6}
-  .field input:focus,.field textarea:focus,.field select:focus{outline:0;border-color:var(--cyan)}
-  .field input::placeholder,.field textarea::placeholder{color:#6f6690}
-  .btn-light{background:var(--cyan);color:var(--void);border-color:var(--cyan);box-shadow:5px 5px 0 var(--magenta)}
-  .btn-light:hover{box-shadow:3px 3px 0 var(--magenta)}
-  .btn-light[disabled]{opacity:.55;cursor:not-allowed}
-  .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
-  .formnote{font-size:.83rem;color:#b3aac6;margin-top:1.1rem}
-  .formnote a{color:var(--cyan)}
-  .status{margin-top:1.25rem;padding:.9rem 1.1rem;border-radius:2px;font-size:.92rem;display:none}
-  .status.show{display:block}
-  .status.ok{background:rgba(23,185,120,.16);border:1px solid #17b978;color:#a9ecce}
-  .status.err{background:rgba(255,45,139,.16);border:1px solid var(--magenta);color:#ffc2de}
-  .direct{border-top:1px solid rgba(255,255,255,.14);margin-top:2rem;padding-top:2rem}
-  .direct a{color:var(--cyan);font-family:var(--font-mono);font-size:.95rem}
-  .direct .lbl,.elsewhere .lbl{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.13em;text-transform:uppercase;color:#b3aac6}
-
-  footer{padding:2.5rem 0;font-family:var(--font-mono);font-size:.76rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
-  .foot{display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between;align-items:center}
-  footer a{color:var(--ink-2);text-decoration:none;border-bottom:1px solid transparent;transition:border-color .18s,color .18s}
-  footer a:hover{color:var(--ink);border-bottom-color:var(--magenta)}
-  .foot-links{display:flex;flex-wrap:wrap;gap:1.35rem}
-
-  :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
-</style>
 </head>
-<body>
+
+<body id="top">
+
 <a class="skip" href="#main">Skip to content</a>
 
-<div id="bg" aria-hidden="true">
-  <div class="layer px-sun"    data-speed="0" data-from="60" data-to="-140"></div>
-  <div class="layer px-coarse" data-speed="0.16" data-tile="256"></div>
-  <div class="layer px-fine"   data-speed="0.30" data-tile="64"></div>
-</div>
-
-<header>
-  <div class="wrap nav">
-    <a class="brand" href="https://et3.media" target="_blank" rel="noopener"
-       aria-label="ET3 Media — visit the studio site at et3.media">
-      <span class="chip"><img src="/assets/et3-media-logo.png" width="440" height="242" alt="ET3 Media"></span>
-      <span class="who">Edward Joseph Tatton III<em>et3.media ↗</em></span>
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="#top">
+      <span class="brand-name">Ed Tatton</span>
+      <span class="brand-where">Norwalk, Connecticut</span>
     </a>
-    <nav aria-label="Primary">
-      <ul>
-        <li><a class="navlink" href="#services">Services</a></li>
-        <li><a class="navlink" href="#work">Work</a></li>
-        <li><a class="navlink" href="#process">Process</a></li>
-        <li><a class="navlink" href="#about">About</a></li>
-        <li><a class="navlink" href="#contact">Contact</a></li>
-      </ul>
+    <nav class="site-nav" aria-label="Sections">
+      <a href="#projects">Projects</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
     </nav>
   </div>
 </header>
 
 <main id="main">
 
-<!-- HERO -->
-<div id="top" class="hero">
-  <div class="wrap hero-grid">
-    <div>
-      <p class="eyebrow">Design · Web · AI readiness</p>
-      <h1>Good work,<span class="l2">made <em>legible</em>.</span></h1>
-      <p class="lede">
-        <a class="ext" href="https://et3.media" target="_blank" rel="noopener">ET3&nbsp;Media</a>
-        is a small studio run by Edward Joseph Tatton III. I build websites and web
-        applications for small businesses, and I help institutions figure out what
-        responsible AI use actually looks like in practice — policy, governance, and the
-        unglamorous work of getting people ready.
-      </p>
-      <div class="hero-actions">
-        <a class="btn" href="#contact">Start a conversation</a>
-        <a class="btn btn-ghost" href="#services">What I do</a>
-        <span class="avail"><span class="dot" aria-hidden="true"></span> Taking new projects</span>
+  <!-- ── Hero ─────────────────────────────────────────────────────────── -->
+  <section class="hero" aria-labelledby="hero-h">
+    <div class="wrap hero-inner">
+      <div class="hero-text">
+        <p class="eyebrow">Designer · builder · Norwalk, CT</p>
+        <h1 id="hero-h">I build things that make sense of a place.</h1>
+        <p class="lede">I'm Ed Tatton. I run a small design studio, publish a daily civic brief for my
+          city, keep a sourced ledger of surveillance-tech failures, DJ on the side, and build private
+          tools for my family and myself. This page is the index.</p>
+        <p class="hero-actions">
+          <a class="btn" href="#projects">See the projects</a>
+          <a class="quiet-link" href="#contact">or say hello</a>
+        </p>
       </div>
-    </div>
-    <div class="hero-photo">
-      <figure>
-        <div class="photo-frame">
-          <img src="/assets/edward-tatton.jpg" width="400" height="400"
-               alt="Portrait of Edward Joseph Tatton III" fetchpriority="high">
-        </div>
-        <figcaption>
-          <b>Edward Joseph Tatton III</b>
-          Creative communications leader, designer, and AI governance practitioner.
-          Norwalk, Connecticut.
-        </figcaption>
+      <figure class="portrait">
+        <img src="/assets/edward-tatton.jpg" width="400" height="400"
+             alt="Portrait of Ed Tatton" fetchpriority="high">
+        <figcaption>Edward Joseph Tatton III · Norwalk, Connecticut</figcaption>
       </figure>
     </div>
-  </div>
-</div>
+  </section>
 
-<!-- SERVICES -->
-<section id="services" aria-labelledby="services-h">
-  <div class="wrap">
-    <div class="sec-head">
-      <p class="eyebrow">Services</p>
-      <h2 id="services-h">Two kinds of work</h2>
-      <p>They look unrelated. They aren't — both are about taking something tangled and making it clear enough that people can act on it.</p>
-    </div>
-    <div class="tracks">
-      <article class="track t-cyan">
-        <span class="track-tag">For small businesses</span>
-        <h3>Design &amp; web services</h3>
-        <p>
-          Sites and web applications built to fit how your business actually runs, by
-          someone who has spent nearly two decades doing design and communications work
-          inside a large organization.
-        </p>
-        <ul>
-          <li>Websites that load fast, rank well, and don't charge monthly rent on a page builder</li>
-          <li>Custom web applications — portals, booking, dashboards, client-facing tools</li>
-          <li>Brand and print work: identity, layout, signage, event and marketing collateral</li>
-          <li>Automation for the manual chores: intake, scheduling, invoicing, reporting</li>
-        </ul>
-        <p class="studio-link">
-          Studio portfolio and instant quotes:
-          <a href="https://et3.media" target="_blank" rel="noopener">et3.media ↗</a>
-        </p>
-      </article>
+  <!-- ── Projects ─────────────────────────────────────────────────────── -->
+  <section id="projects" class="projects" aria-labelledby="projects-h">
+    <div class="wrap">
+      <h2 id="projects-h">Things I've built</h2>
+      <p class="section-intro">Each one exists because something was scattered, unread, or unfair, and I
+        wanted a place where it wasn't. Public ones link out. Private ones are described but not linked,
+        on purpose.</p>
 
-      <article class="track t-mag">
-        <span class="track-tag">For institutions</span>
-        <h3>AI readiness &amp; governance</h3>
-        <p>
-          I've spent the past year taking an institution from AI anxiety to AI readiness
-          from the inside — not as a vendor, but as the person who had to write the policy
-          and get colleagues to agree to it.
-        </p>
-        <ul>
-          <li>Usage and attitudes surveys — find out what staff are <em>already</em> doing before you write a rule</li>
-          <li>AI strategic plans and integration roadmaps</li>
-          <li>Standing up an AI advisory committee that actually decides things</li>
-          <li>Practical guidance for faculty, staff and leadership — and the procurement gaps most policies miss</li>
-        </ul>
-      </article>
-    </div>
-  </div>
-</section>
+      <h3 class="group-h" id="group-public">Out in the world</h3>
+      <ul class="cards cards-a" aria-labelledby="group-public">
 
-<!-- WORK -->
-<section id="work" aria-labelledby="work-h">
-  <div class="wrap">
-    <div class="sec-head">
-      <p class="eyebrow">Selected work</p>
-      <h2 id="work-h">Things I've built</h2>
-      <p>A sample of recent projects. Some details are kept general at clients' request.</p>
-    </div>
+        <li class="card" style="--card-accent:#0F6E73">
+          <p class="card-label"><span class="dot" aria-hidden="true"></span>Civic news · Live</p>
+          <h4 class="card-name">The Norwalk Sound</h4>
+          <p class="card-what">A daily civic brief for Norwalk, Connecticut. It reads the city's meeting
+            agendas, packets and minutes, local news, public filings, weather and tides, and publishes
+            before breakfast, with a Sunday newsletter and a full Spanish edition.</p>
+          <p class="card-why">The public record here is public but scattered across portals nobody has
+            time to read. The Sound puts it in one place. Anything interpretive is AI-drafted and held
+            for human review before it publishes; the record itself is published verbatim; no names from
+            police logs ever appear.</p>
+          <p class="card-action">
+            <a class="btn btn-secondary" href="https://thenorwalksound.com" rel="noopener">Read The Norwalk Sound<span class="ext" aria-hidden="true">↗</span><span class="sr-only"> (opens thenorwalksound.com)</span></a>
+          </p>
+        </li>
 
-    <article class="work-item">
-      <p class="work-meta">AI governance</p>
-      <div class="work-body">
-        <h3>Institutional AI readiness programme</h3>
-        <p>
-          At a SUNY community college, I led a campus-wide AI usage and attitudes survey,
-          co-developed an AI Integration Strategic Plan, helped stand up an AI Advisory
-          Committee, and authored AI guidance for faculty, staff and leadership. The survey
-          is what made it work: it turned an abstract argument into evidence about what
-          people were already doing, which is a far better place to start writing policy from.
-          I've since discussed the approach publicly on the Higher Ed Pulse podcast.
-        </p>
-        <ul class="tags">
-          <li>Survey design</li><li>Strategic plan</li><li>Committee governance</li><li>Policy authoring</li>
-        </ul>
-      </div>
-    </article>
+        <li class="card" style="--card-accent:#B8321A">
+          <p class="card-label"><span class="dot" aria-hidden="true"></span>Accountability · Live</p>
+          <h4 class="card-name">Nothing To See Here</h4>
+          <p class="card-what">A running, sourced timeline of how license-plate readers, body cameras, AI
+            report-writers and the rest of the "public-safety technology" market are actually going, and
+            what the failures cost taxpayers. A counter in the corner, THE TAB, adds up the documented
+            public money.</p>
+          <p class="card-why">The format is borrowed, with credit, from Web3 Is Going Just Great. Every
+            entry cites its sources and nothing publishes until code has confirmed a fetched source
+            supports the claim, the date and the dollar figure. The entries are deadpan on purpose; the
+            facts carry the irony.</p>
+          <p class="card-action">
+            <a class="btn btn-secondary" href="https://nothingtosee.fyi" rel="noopener">Visit Nothing To See Here<span class="ext" aria-hidden="true">↗</span><span class="sr-only"> (opens nothingtosee.fyi)</span></a>
+          </p>
+        </li>
 
-    <article class="work-item">
-      <p class="work-meta">Member portal</p>
-      <div class="work-body">
-        <h3>RDB Backstage</h3>
-        <p>
-          A members-only platform for a live production company. It gives contractors a
-          single place to handle onboarding paperwork, see the rates that apply to them,
-          and pull live operational data — replacing a scattered mix of email threads, PDFs
-          and shared sheets. Recently rebuilt end-to-end for mobile, so crew can use it from
-          a job site rather than a desk.
-        </p>
-        <ul class="tags">
-          <li>Authentication</li><li>Live data feeds</li><li>Document handling</li><li>Mobile rebuild</li>
-        </ul>
-      </div>
-    </article>
+        <!-- Chewy Down: copy below is a placeholder — the live site could not be
+             fetched from this sandbox. Genres and the booking line still need
+             confirming before this goes out. -->
+        <li class="card" style="--card-accent:#6B3FA0">
+          <p class="card-label"><span class="dot" aria-hidden="true"></span>Music · DJ</p>
+          <h4 class="card-name">Chewy Down</h4>
+          <p class="card-what">The DJ side of things. Mixes, sets and where to hear them next.</p>
+          <p class="card-why">Because not everything I make has to be useful.</p>
+          <p class="card-action">
+            <a class="btn btn-secondary" href="https://www.chewydown.com" rel="noopener">Listen at chewydown.com<span class="ext" aria-hidden="true">↗</span><span class="sr-only"> (opens chewydown.com)</span></a>
+          </p>
+        </li>
 
-    <article class="work-item">
-      <p class="work-meta">Event tooling</p>
-      <div class="work-body">
-        <h3>Tournament signup &amp; live leaderboard</h3>
-        <p>
-          Registration and a real-time leaderboard for a recurring sporting event, built as
-          lightweight serverless services at the network edge. Sub-two-millisecond response
-          times, no server to maintain between events, and no cost when it's sitting idle.
-        </p>
-        <ul class="tags">
-          <li>Serverless</li><li>Real-time</li><li>Edge infrastructure</li>
-        </ul>
-      </div>
-    </article>
+        <li class="card" style="--card-accent:#27AAE1">
+          <p class="card-label"><span class="dot" aria-hidden="true"></span>Studio · Since 2016</p>
+          <h4 class="card-name">ET3 Media</h4>
+          <!-- The ET3 mark is cyan on transparent, so it is unreadable on paper.
+               It gets a dark chip here, and only here. -->
+          <p class="logo-chip"><img src="/assets/et3-media-logo.png" width="120" height="34"
+               alt="ET3 Media" loading="lazy" decoding="async"></p>
+          <p class="card-what">My design studio. Custom websites, brand identities, print and signage for
+            small businesses in Connecticut and beyond, plus the automation that keeps a one-person studio
+            running.</p>
+          <p class="card-why">It is also the publisher behind The Norwalk Sound and Nothing To See Here.
+            If you need something built, this is the door.</p>
+          <p class="card-action">
+            <a class="btn btn-secondary" href="https://et3.media" rel="noopener">Go to et3.media<span class="ext" aria-hidden="true">↗</span><span class="sr-only"> (opens et3.media)</span></a>
+          </p>
+        </li>
+      </ul>
 
-    <article class="work-item">
-      <p class="work-meta">Brand &amp; events</p>
-      <div class="work-body">
-        <h3>Institutional branding, print and live events</h3>
-        <p>
-          Two decades of the work that keeps an organization looking like itself: identity
-          and rebranding, commencement programmes and ceremonial banners, admissions and
-          open-house collateral, photography and video. I also organized and produced a
-          TEDx event, from speaker selection through to stage and recording.
-        </p>
-        <ul class="tags">
-          <li>Brand identity</li><li>Print production</li><li>Photography &amp; video</li><li>Event production</li>
-        </ul>
-      </div>
-    </article>
-  </div>
-</section>
+      <h3 class="group-h" id="group-private">Built for a few people</h3>
+      <ul class="cards cards-b" aria-labelledby="group-private">
 
-<!-- PROCESS -->
-<section id="process" class="process" aria-labelledby="process-h">
-  <div class="wrap">
-    <div class="sec-head">
-      <p class="eyebrow">Process</p>
-      <h2 id="process-h">How I work</h2>
-      <p>No discovery-phase theatre, no twelve-week runway before you see anything real. Open a step to read more.</p>
-    </div>
-    <div class="steps">
-      <details class="step" open>
-        <summary><span class="n">01</span><h3>Start with the problem</h3><span class="chev" aria-hidden="true"></span></summary>
-        <p class="body">A short conversation about what's actually costing you time or money. Sometimes the answer is that you don't need the thing you asked for — I'll tell you that.</p>
-      </details>
-      <details class="step">
-        <summary><span class="n">02</span><h3>Find out what's true</h3><span class="chev" aria-hidden="true"></span></summary>
-        <p class="body">Ask the people involved before deciding anything. A survey, an audit, a walk through the current workflow. Assumptions are where projects go wrong.</p>
-      </details>
-      <details class="step">
-        <summary><span class="n">03</span><h3>Build in the open</h3><span class="chev" aria-hidden="true"></span></summary>
-        <p class="body">You see working drafts early and often, on a live preview link. Course corrections happen while they're still cheap.</p>
-      </details>
-      <details class="step">
-        <summary><span class="n">04</span><h3>Hand over the keys</h3><span class="chev" aria-hidden="true"></span></summary>
-        <p class="body">Your code, your accounts, your documents, documented. Stay for ongoing support if it's useful — but never because you're locked in.</p>
-      </details>
-    </div>
-  </div>
-</section>
+        <li class="card" style="--card-accent:#6F6B63">
+          <p class="card-label"><span class="dot" aria-hidden="true"></span>Family archive · Private</p>
+          <h4 class="card-name">FamilyBot</h4>
+          <p class="card-what">A private archive for two families: a family tree, people pages, recipes,
+            photos and stories, built to the standard "could your grandmother use this on her phone,
+            alone, on the first try?"</p>
+          <p class="card-why">Genealogy lives in spreadsheets and subscription sites. This puts the proved
+            research, the scanned certificates and the recipes in one warm place, with every edit logged
+            and every invite admin-only.</p>
+          <p class="card-action no-link">No link: invite-only, by design.</p>
+        </li>
 
-<!-- ABOUT -->
-<section id="about" aria-labelledby="about-h">
-  <div class="wrap about-grid">
-    <div class="sec-head" style="margin-bottom:0">
-      <p class="eyebrow">About</p>
-      <h2 id="about-h">Who you'd be working with</h2>
-    </div>
-    <div class="about-body">
-      <p>
-        I'm Edward Joseph Tatton III — Edward is fine. For nearly twenty years I've worked in creative communications at
-        a SUNY community college, where I manage the team responsible for branding, marketing
-        and web communication — the print, photography, video and design work that drives
-        enrollment and keeps an institution recognisable to itself.
-      </p>
-      <p>
-        Over the past year I've become deeply involved in how that institution thinks about,
-        governs and integrates AI: running the survey, co-writing the strategic plan, helping
-        form the advisory committee, and authoring the guidance. It has given me a
-        practitioner's view of what it actually takes to move an organization from AI anxiety
-        to AI readiness — which is mostly not a technology problem.
-      </p>
-      <p>
-        ET3 Media is the studio I run alongside that, for small business clients. I've also
-        taught graphic design as an adjunct, and I hold a master's in Information Design &amp;
-        Technology and a bachelor's in Photography and Art History.
-      </p>
-      <p>
-        Working with a studio this size means you deal with the person doing the work. No
-        account manager, no handoff to a junior team, no billing surprises.
-      </p>
-      <ul class="facts">
-        <li><span class="k">Based</span><span class="v">Norwalk, Connecticut</span></li>
-        <li><span class="k">Working with</span><span class="v">Clients nationwide, remote</span></li>
-        <li><span class="k">Education</span><span class="v">MS Information Design &amp; Technology<br>BA Photography &amp; Art History</span></li>
-        <li><span class="k">Engagements</span><span class="v">Fixed-scope projects, advisory &amp; ongoing support</span></li>
-        <li><span class="k">Availability</span><span class="v">Taking new projects</span></li>
+        <li class="card" style="--card-accent:#6F6B63">
+          <p class="card-label"><span class="dot" aria-hidden="true"></span>Personal briefing · Private</p>
+          <h4 class="card-name">HealthIntel</h4>
+          <p class="card-what">A news-intelligence briefing built for one reader. It ingests healthcare
+            trade press, publisher newsletters and news feeds, clusters the same story across outlets,
+            ranks by relevance and writes a daily brief and a weekly digest.</p>
+          <p class="card-why">It runs under one honesty rule: it may never state a fact that wasn't in the
+            retrieved headline or blurb, and it says which outlet is covering what rather than pretending
+            to have read the article.</p>
+          <p class="card-action no-link">No link: single-reader tool behind a login.</p>
+        </li>
+
+        <li class="card" style="--card-accent:#6F6B63">
+          <p class="card-label"><span class="dot" aria-hidden="true"></span>Workplace tools · Internal</p>
+          <h4 class="card-name">Marketing Dashboard &amp; Ad Sandbox</h4>
+          <p class="card-what">Two browser-only tools for a college marketing team. The dashboard turns
+            exported campaign CSVs from social, email and web into charts and branded PDF reports. The Ad
+            Sandbox tests ad copy against fifteen synthetic student personas before it runs.</p>
+          <p class="card-why">No install, no server, no admin rights: they open from a shared drive by
+            double-click, and the data never leaves the machine.</p>
+          <p class="card-action no-link">No link: lives on an internal network drive.</p>
+        </li>
       </ul>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- CONTACT -->
-<section id="contact" class="contact" aria-labelledby="contact-h">
-  <div class="wrap contact-grid">
-    <div class="sec-head" style="margin-bottom:0">
-      <p class="eyebrow">Let's talk</p>
-      <h2 id="contact-h">Got a project in mind?</h2>
-      <p>Whether it's a website, an internal tool, or a committee that needs to produce an AI policy by a deadline — tell me what you're working on. I read every message and reply personally, usually within a business day.</p>
-      <div class="direct">
-        <p class="lbl">Prefer email?</p>
-        <p style="margin-top:.5rem"><a href="mailto:etatton@gmail.com">etatton@gmail.com</a></p>
+  <!-- ── About ────────────────────────────────────────────────────────── -->
+  <section id="about" class="about" aria-labelledby="about-h">
+    <div class="wrap about-inner">
+      <div class="about-text">
+        <h2 id="about-h">About</h2>
+        <p>I'm Edward Joseph Tatton III. Ed is fine. I've spent nearly twenty years in creative
+          communications at a college in New York, where I lead the team behind its brand, print,
+          photography and web, and where I more recently led its AI readiness work: the survey, the
+          strategic plan, the advisory committee and the guidance.</p>
+        <p>ET3 Media is the studio I run alongside that. The other projects on this page are what I build
+          when nobody asked me to.</p>
+        <p>I hold a master's in Information Design &amp; Technology and a bachelor's in Photography and Art
+          History, and I've taught graphic design as an adjunct. I live in Norwalk, Connecticut.</p>
+      </div>
+      <dl class="facts">
+        <div class="fact">
+          <dt>Based</dt>
+          <dd>Norwalk, Connecticut</dd>
+        </div>
+        <div class="fact">
+          <dt>Studio</dt>
+          <dd><a href="https://et3.media" rel="noopener">et3.media<span class="ext" aria-hidden="true">↗</span></a></dd>
+        </div>
+        <div class="fact">
+          <dt>Elsewhere</dt>
+          <dd>
+            <a href="https://www.linkedin.com/in/edtatton/" rel="noopener">LinkedIn<span class="ext" aria-hidden="true">↗</span></a>,
+            <a href="https://www.instagram.com/2_weeks_on_mars" rel="noopener">Instagram<span class="ext" aria-hidden="true">↗</span></a>
+          </dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- ── Contact ──────────────────────────────────────────────────────── -->
+  <section id="contact" class="contact" aria-labelledby="contact-h">
+    <div class="wrap contact-inner">
+      <div class="contact-intro">
+        <h2 id="contact-h">Say hello</h2>
+        <p>A question about one of the projects, a tip for The Norwalk Sound or Nothing To See Here, or
+          something you'd like built. I read every message and reply personally, usually within a couple
+          of days.</p>
+        <p class="fineprint">Prefer email? <a href="mailto:etatton@gmail.com">etatton@gmail.com</a></p>
+        <p class="fineprint">Tips for Nothing To See Here can go straight to
+          <a href="mailto:tips@nothingtosee.fyi">tips@nothingtosee.fyi</a>. For The Norwalk Sound, use the
+          form below and say so.</p>
+        <p class="fineprint">
+          <a href="https://www.linkedin.com/in/edtatton/" rel="noopener">LinkedIn<span class="ext" aria-hidden="true">↗</span></a> ·
+          <a href="https://www.instagram.com/2_weeks_on_mars" rel="noopener">Instagram<span class="ext" aria-hidden="true">↗</span></a>
+        </p>
       </div>
 
-      <div class="elsewhere">
-        <p class="lbl">Elsewhere</p>
-        <ul>
-          <li>
-            <a href="https://et3.media" target="_blank" rel="noopener">
-              <b>et3.media ↗</b><span>The studio — portfolio and instant quotes</span>
-            </a>
-          </li>
-          <li>
-            <a href="https://www.linkedin.com/in/edtatton/" target="_blank" rel="noopener me">
-              <b>LinkedIn ↗</b><span>Connect professionally</span>
-            </a>
-          </li>
-          <li>
-            <a href="https://www.instagram.com/2_weeks_on_mars" target="_blank" rel="noopener me">
-              <b>Instagram ↗</b><span>Or socially, at 2_weeks_on_mars</span>
-            </a>
-          </li>
-        </ul>
+      <div class="contact-form-col">
+        <noscript>
+          <p class="notice">JavaScript is switched off, so the form below can't send. Email
+            <a href="mailto:etatton@gmail.com">etatton@gmail.com</a> instead — it reaches me just as fast.</p>
+        </noscript>
+
+        <!-- No `action` on purpose: the endpoint takes JSON, not a form POST.
+             Without JS the noscript note above carries the mailto. -->
+        <form id="contact-form" novalidate>
+          <p class="field">
+            <label for="f-name">Your name</label>
+            <input id="f-name" name="name" type="text" autocomplete="name" maxlength="200" required>
+          </p>
+          <p class="field">
+            <label for="f-email">Email</label>
+            <input id="f-email" name="email" type="email" autocomplete="email" maxlength="320" required>
+          </p>
+          <p class="field">
+            <label for="f-message">Message</label>
+            <textarea id="f-message" name="message" rows="6" maxlength="8000" required></textarea>
+          </p>
+          <p class="hp" aria-hidden="true">
+            <label for="f-company">Company website</label>
+            <input id="f-company" name="company_website" type="text" tabindex="-1" autocomplete="off">
+          </p>
+          <p class="form-actions">
+            <button class="btn" id="submit-btn" type="submit">Send message</button>
+          </p>
+          <p id="form-status" class="status" role="status" aria-live="polite"></p>
+        </form>
+
+        <div id="sent-card" class="sent-card" hidden>
+          <h3 id="sent-h">Thanks.</h3>
+          <p>Your message is on its way. I'll reply from
+            <a href="mailto:etatton@gmail.com">etatton@gmail.com</a>, usually within a couple of days.</p>
+          <p><button type="button" class="linkish" id="send-another">Send another</button></p>
+        </div>
       </div>
     </div>
-
-    <form id="contact-form" novalidate>
-      <div class="field">
-        <label for="name">Your name</label>
-        <input type="text" id="name" name="name" autocomplete="name" required placeholder="Jane Smith">
-      </div>
-      <div class="field">
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" autocomplete="email" required placeholder="jane@company.com">
-      </div>
-      <div class="field">
-        <label for="topic">What's this about?</label>
-        <select id="topic" name="topic">
-          <option value="Website or web app">A website or web application</option>
-          <option value="AI readiness">AI readiness, policy or governance</option>
-          <option value="Brand or print">Brand, print or event work</option>
-          <option value="Existing system">Fixing or improving something existing</option>
-          <option value="Speaking">Speaking or a podcast</option>
-          <option value="Other">Something else</option>
-        </select>
-      </div>
-      <div class="field">
-        <label for="message">Tell me a bit more</label>
-        <textarea id="message" name="message" required placeholder="What are you trying to solve? Rough timeline and budget are helpful but not required."></textarea>
-      </div>
-
-      <div class="hp" aria-hidden="true">
-        <label for="company_website">Leave this blank</label>
-        <input type="text" id="company_website" name="company_website" tabindex="-1" autocomplete="off">
-      </div>
-
-      <button class="btn btn-light" type="submit" id="submit-btn">Send message</button>
-      <p class="formnote">No newsletters, no CRM sequences. Your details go to me and nowhere else.</p>
-      <div class="status" id="form-status" role="status" aria-live="polite"></div>
-    </form>
-  </div>
-</section>
+  </section>
 
 </main>
 
-<footer>
-  <div class="wrap foot">
-    <p>© <span id="year">2026</span> ET3 Media · Edward Joseph Tatton III</p>
-    <p class="foot-links">
-      <a href="https://et3.media" target="_blank" rel="noopener">et3.media</a>
-      <a href="https://www.linkedin.com/in/edtatton/" target="_blank" rel="noopener me">LinkedIn</a>
-      <a href="https://www.instagram.com/2_weeks_on_mars" target="_blank" rel="noopener me">Instagram</a>
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <p class="copy">&copy; <span id="year">2026</span> Edward Joseph Tatton III · Norwalk, Connecticut</p>
+    <p class="footer-links">
       <a href="mailto:etatton@gmail.com">Email</a>
+      <a href="https://www.linkedin.com/in/edtatton/" rel="noopener">LinkedIn<span class="ext" aria-hidden="true">↗</span></a>
+      <a href="https://www.instagram.com/2_weeks_on_mars" rel="noopener">Instagram<span class="ext" aria-hidden="true">↗</span></a>
+      <a href="https://et3.media" rel="noopener">et3.media<span class="ext" aria-hidden="true">↗</span></a>
     </p>
   </div>
 </footer>
 
-<script>
-  document.getElementById('year').textContent = new Date().getFullYear();
-
-  /* Parallax background. Grid layers use a modulo of their tile size so the
-     transform stays under one tile no matter how far the page scrolls; the
-     glow is mapped to scroll progress across a bounded range. */
-  (function () {
-    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const layers = Array.from(document.querySelectorAll('#bg .layer'));
-    if (!layers.length) return;
-    let ticking = false;
-
-    function paint() {
-      const y = window.scrollY || 0;
-      const max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-      const progress = Math.min(1, Math.max(0, y / max));
-
-      for (const el of layers) {
-        const tile = parseFloat(el.dataset.tile) || 0;
-        let ty;
-        if (tile) {
-          ty = -((y * parseFloat(el.dataset.speed)) % tile);
-        } else {
-          const from = parseFloat(el.dataset.from) || 0;
-          const to = parseFloat(el.dataset.to) || 0;
-          ty = from + (to - from) * progress;
-        }
-        el.style.transform = 'translate3d(0,' + ty.toFixed(2) + 'px,0)';
-      }
-      ticking = false;
-    }
-    function request() {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(paint);
-    }
-    addEventListener('scroll', request, { passive: true });
-    addEventListener('resize', request, { passive: true });
-    paint();
-  })();
-
-  /* Process steps: on pointer devices, opening one closes the others.
-     Touch and keyboard keep plain <details> behaviour, so nothing is ever
-     unreachable without hover. */
-  const steps = Array.from(document.querySelectorAll('.step'));
-  steps.forEach(function (d) {
-    d.addEventListener('toggle', function () {
-      if (d.open) steps.forEach(function (o) { if (o !== d) o.open = false; });
-    });
-  });
-
-  const form   = document.getElementById('contact-form');
-  const btn    = document.getElementById('submit-btn');
-  const status = document.getElementById('form-status');
-  const MAILTO = 'mailto:etatton@gmail.com';
-
-  function show(kind, html){
-    status.className = 'status show ' + kind;
-    status.innerHTML = html;
-  }
-
-  form.addEventListener('submit', async function (e) {
-    e.preventDefault();
-    status.className = 'status';
-
-    const data = Object.fromEntries(new FormData(form).entries());
-
-    if (!data.name || !data.email || !data.message) {
-      show('err', 'Please fill in your name, email and a message.');
-      return;
-    }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
-      show('err', 'That email address doesn’t look right — mind checking it?');
-      return;
-    }
-
-    btn.disabled = true;
-    const original = btn.textContent;
-    btn.textContent = 'Sending…';
-
-    try {
-      const res = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      });
-
-      if (res.ok) {
-        form.reset();
-        show('ok', 'Thanks — your message is on its way. I’ll get back to you shortly.');
-      } else {
-        throw new Error('bad status ' + res.status);
-      }
-    } catch (err) {
-      // Never silently lose a message: fall back to the user's mail client.
-      const subject = encodeURIComponent('Website enquiry - ' + (data.topic || 'General'));
-      const body = encodeURIComponent(
-        'Name: ' + data.name + '\nEmail: ' + data.email + '\nTopic: ' + (data.topic || '') + '\n\n' + data.message
-      );
-      show('err',
-        'Something went wrong sending that. <a href="' + MAILTO + '?subject=' + subject + '&body=' + body +
-        '">Click here to send it by email instead</a> — your message is already filled in.'
-      );
-    } finally {
-      btn.disabled = false;
-      btn.textContent = original;
-    }
-  });
-</script>
+<script src="/main.js" defer></script>
 </body>
 </html>
