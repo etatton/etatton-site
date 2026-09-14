@@ -165,12 +165,14 @@
                  aria-label="Read The Norwalk Sound (thenorwalksound.com)">Read The Norwalk Sound<span class="arrow" aria-hidden="true"> →</span></a>
             </p>
           </div>
-          <!-- Screenshot swap, when Ed has one. Replace the whole .placard block with:
+          <!-- Type-only placard until a screenshot exists. One command shoots the live
+               site and swaps the image in (see tests/shoot-feature.mjs):
+                 NODE_PATH=$(npm root -g) node tests/shoot-feature.mjs norwalk-sound https://thenorwalksound.com/
+               By hand: replace the .placard block with
                <img src="/assets/feature-norwalk-sound.jpg" width="1600" height="1000"
-                    alt="The Norwalk Sound, published before breakfast" loading="lazy" decoding="async">
-               and drop aria-hidden from the <figure>. Expected file:
-               /assets/feature-norwalk-sound.jpg at 1600×1000. -->
-          <figure class="feature-media" aria-hidden="true">
+                    alt="The Norwalk Sound homepage: the day's brief under the masthead" loading="lazy" decoding="async">
+               add feature-media--img to the figure's class and drop aria-hidden. -->
+          <figure class="feature-media" aria-hidden="true" data-slot="norwalk-sound">
             <div class="placard">
               <p class="placard-title">The Norwalk Sound</p>
               <p class="placard-sub">Norwalk, Connecticut · daily</p>
@@ -199,7 +201,7 @@
           <!-- Homepage of nothingtosee.fyi as built from its repository on 2026-09-14,
                THE TAB reading $10.1M across 32 entries. A static screenshot goes stale
                as the counter grows; re-shoot at 1600×1000 and replace this file. -->
-          <figure class="feature-media feature-media--img">
+          <figure class="feature-media feature-media--img" data-slot="nothing-to-see-here">
             <img src="/assets/feature-nothing-to-see-here.jpg" width="1600" height="1000"
                  alt="The Nothing To See Here homepage: the timeline of entries with THE TAB counter in the corner" loading="lazy" decoding="async">
           </figure>
