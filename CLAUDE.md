@@ -66,7 +66,7 @@ robots.txt · sitemap.xml
 
 | slot | file | size | notes |
 |---|---|---|---|
-| 01 The Norwalk Sound feature | `assets/feature-norwalk-sound.jpg` | 1600×1000 (16:10), JPEG q70 | **not yet shot** — the live site is unreachable from the build sandbox and the repo renders from a database that lives only on Ed's box (a fixture build shows fake test content, so it was not used). Run `tests/shoot-feature.mjs norwalk-sound https://thenorwalksound.com/` anywhere with Chromium + Playwright + internet; it writes the file AND swaps the `<img>` into the `data-slot="norwalk-sound"` figure |
+| 01 The Norwalk Sound feature | `assets/feature-norwalk-sound.jpg` | 1600×1000 (16:10), JPEG q70 | in place — shot from Ed's box on 2026-09-14 with `tests/shoot-feature.mjs norwalk-sound https://thenorwalksound.com/` (the build sandbox cannot reach the live site, and the repo renders from a database that lives only on that box, so the tool runs there). Re-shoot the same way whenever the homepage should look fresher |
 | 02 Nothing To See Here feature | `assets/feature-nothing-to-see-here.jpg` | 1600×1000 (16:10) | in place; re-shoot with `tests/shoot-feature.mjs nothing-to-see-here https://nothingtosee.fyi/` when THE TAB moves far from $10.1M |
 | Hero portrait | `assets/edward-tatton.jpg` | ≥ 1200×1500 (4:5), JPEG | current file is 400×400 and is being cropped to 4:5; a larger original will sharpen it |
 | 03 ChewyDown artifact | `assets/chewydown-logo.png` | in place (288×142) | a 2× version (576×284) or an SVG would be crisper on retina |
@@ -100,8 +100,8 @@ npx wrangler pages deploy .          # deploy (needs CLOUDFLARE_API_TOKEN)
   before images. New twelve-column `.wrap` grid inside wide outer margins, hairlines instead of
   cards. The four uniform card grids became ONE `<ol class="projects-list">` in three CSS tiers:
   two full-width zig-zag leads (02 carries a real 1600×1000 screenshot of nothingtosee.fyi built
-  from its repo that day, THE TAB at $10.1M; 01 is a type-only placard until Ed supplies a Sound
-  screenshot — the swap markup is in an HTML comment), a two-up studio/side-business row with logo
+  from its repo that day, THE TAB at $10.1M; 01 was a type-only placard until Ed shot the live Sound homepage from his
+  box the same day with `tests/shoot-feature.mjs`), a two-up studio/side-business row with logo
   plates, and a three-column private ledger. Numbers 01–07 and section eyebrows added; "↗" + the sr-only
   "(opens …)" strings replaced by a "→" and an `aria-label` naming the host. A pull quote repeats
   one sentence from About, on purpose. Contact inputs are bottom-rule only with a two-row routes
