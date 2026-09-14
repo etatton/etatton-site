@@ -24,8 +24,8 @@ linked out. It is not the studio site (that is et3.media) and not a résumé.
   telling the visitor a message was sent when it wasn't.
 - **Private projects are described, never linked.** FamilyBot, HealthIntel and the marketing tools have
   no public URL on this page by the owner's decision; do not add one.
-- **Copy for Chewy Down is a placeholder** until Ed confirms it (the live site could not be fetched from
-  the build sandbox). The HTML carries a comment marking it.
+- **ChewyDown Productions is Ed's DJ business** (weddings and private events since 2000, Hudson Valley and
+  tri-state, with DJ Big Mike). The card links to chewydown.com; keep the name spelled ChewyDown.
 - **Every interactive target is ≥ 44px tall, body text ≥ 17px, focus rings visible, reduced motion
   honoured.** `tests/visual.mjs` measures the first two.
 
@@ -57,7 +57,7 @@ npx wrangler pages deploy .          # deploy (needs CLOUDFLARE_API_TOKEN)
 
 - **2026-09-14 — redesign as a personal index.** Replaced the ET3-studio pitch page (services, higher-ed
   AI governance, process, parallax grid) with a projects-first personal page: The Norwalk Sound, Nothing
-  To See Here, Chewy Down and ET3 Media linked out; FamilyBot, HealthIntel and the Marketing Dashboard /
+  To See Here, ChewyDown Productions and ET3 Media linked out; FamilyBot, HealthIntel and the Marketing Dashboard /
   Ad Sandbox described without links. New visual system (paper/ink, Instrument Serif + Inter, one accent,
   per-project accent marks, light + dark). Nav cut to three items, contact form cut to three fields with
   a real completion state. Added contact-function tests and a Playwright layout check. Design rationale
