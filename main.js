@@ -8,6 +8,38 @@
   var yearEl = document.getElementById('year');
   if (yearEl) yearEl.textContent = String(new Date().getFullYear());
 
+
+  /* ── Header hairline ──────────────────────────────────────────────────
+     A 1px sentinel at the very top of the document. While it is in view the
+     page is unscrolled and the sticky header needs no rule; once it leaves,
+     the rule appears. With this file blocked there is simply never a rule. */
+  var header   = document.getElementById('site-header');
+  var sentinel = document.getElementById('scroll-sentinel');
+  if (header && sentinel && 'IntersectionObserver' in window) {
+    new IntersectionObserver(function (entries) {
+      header.classList.toggle('is-scrolled', !entries[0].isIntersecting);
+    }).observe(sentinel);
+  }
+
+  /* ── Section reveal ───────────────────────────────────────────────────
+     The CSS only hides a section when html.js is set (done inline in <head>,
+     before paint) and the visitor has not asked for reduced motion. Each
+     section is revealed once and then stops being watched. */
+  document.documentElement.setAttribute('data-revealing', '');
+  var reveals = document.querySelectorAll('.reveal');
+  if (reveals.length && 'IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries, obs) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('in');
+        obs.unobserve(entry.target);
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(function (el) { io.observe(el); });
+  } else {
+    reveals.forEach(function (el) { el.classList.add('in'); });
+  }
+
   var form     = document.getElementById('contact-form');
   var btn      = document.getElementById('submit-btn');
   var status   = document.getElementById('form-status');
