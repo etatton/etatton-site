@@ -14,8 +14,13 @@
       type-only placard, it is replaced by the <img> markup (class feature-media--img,
       no aria-hidden). If it already holds an <img>, only the file is refreshed.
 
-   Playwright is a global install on the build box, hence createRequire + NODE_PATH.
-   Nothing is committed; review `git diff` and the image, then commit. */
+   Needs Playwright + Chromium on the machine you run it on. Either a global install
+   (then pass NODE_PATH=$(npm root -g)) or, simpler, a local one inside this folder:
+
+     npm install --no-save playwright@1.56.1 && npx playwright install chromium
+
+   node_modules/ is gitignored and never deployed. Nothing is committed by this tool;
+   review `git diff` and the image, then commit. */
 import { createRequire } from 'node:module';
 import { readFileSync, writeFileSync, statSync } from 'node:fs';
 import { resolve } from 'node:path';
@@ -37,7 +42,16 @@ const htmlPath = resolve(opt('--html', 'index.html'));
 const outPath = resolve(opt('--out', `assets/feature-${slot}.jpg`));
 const webPath = `/assets/feature-${slot}.jpg`;
 
-const { chromium } = createRequire(import.meta.url)('playwright');
+let chromium;
+try {
+  ({ chromium } = createRequire(import.meta.url)('playwright'));
+} catch {
+  console.error(`playwright is not installed where node can see it.
+From this folder, run once:
+  npm install --no-save playwright@1.56.1 && npx playwright install chromium
+then re-run this command without NODE_PATH. (A global install works too, with NODE_PATH=$(npm root -g).)`);
+  process.exit(2);
+}
 const browser = await chromium.launch();
 const page = await browser.newPage({ viewport: { width: 1600, height: 1000 }, deviceScaleFactor: 1 });
 await page.goto(url, { waitUntil: 'networkidle' });

@@ -79,7 +79,8 @@ python3 -m http.server 8787          # local preview at http://localhost:8787/
 npm test                             # contact function tests, no deps
 PLAYWRIGHT_BROWSERS_PATH=/opt/pw-browsers NODE_PATH=$(npm root -g) \
   node tests/visual.mjs http://localhost:8787/ [out-dir]   # screenshots default OUTSIDE the repo
-NODE_PATH=$(npm root -g) node tests/shoot-feature.mjs norwalk-sound https://thenorwalksound.com/   # then review git diff + the JPEG, commit
+npm install --no-save playwright@1.56.1 && npx playwright install chromium   # once, on the machine that runs the tool
+node tests/shoot-feature.mjs norwalk-sound https://thenorwalksound.com/   # then review git diff + the JPEG, commit
 npx wrangler pages deploy .          # deploy (needs CLOUDFLARE_API_TOKEN)
 ```
 

@@ -18,3 +18,7 @@ credentials.json
 
 # Screenshots from tests/visual.mjs — never ship (wrangler deploys the directory)
 shot-*.png
+
+# Local Playwright for tests/*.mjs — never deployed, never committed
+node_modules/
+package-lock.json
