@@ -60,14 +60,14 @@ test('every self-hosted font is preloaded or declared, and the two above the fol
   const undeclared = onDisk.filter((f) => !declared.has(f));
   assert.deepEqual(undeclared, [], `font files shipped but never used: ${undeclared.join(', ')}`);
 
-  for (const f of ['fraunces-normal-latin.woff2', 'inter-normal-latin.woff2']) {
+  for (const f of ['instrument-serif-latin.woff2', 'inter-tight-latin.woff2']) {
     const re = new RegExp(
       `<link[^>]*rel="preload"[^>]*href="/assets/fonts/${f}"[^>]*crossorigin`,
     );
     assert.ok(re.test(html), `${f} is not preloaded with crossorigin`);
   }
   assert.ok(
-    !/rel="preload"[^>]*fraunces-italic/.test(html),
+    !/rel="preload"[^>]*instrument-serif-italic/.test(html),
     'the italic face is below the fold and must not be preloaded',
   );
 });
@@ -125,15 +125,37 @@ test('the "↗" glyph is gone from the page', () => {
   assert.ok(!/\(opens\s/.test(html), 'an "(opens …)" string is still in index.html');
 });
 
-test('dark only: one theme-color, no prefers-color-scheme block, color-scheme declared', () => {
+test('palette: one theme-color, no prefers-color-scheme switch, every ground declares its colour-scheme', () => {
   const themeTags = html.match(/<meta\s+name="theme-color"[^>]*>/g) || [];
   assert.equal(themeTags.length, 1, `expected 1 theme-color meta, found ${themeTags.length}`);
-  assert.match(themeTags[0], /content="#141311"/);
-  assert.ok(
-    !/prefers-color-scheme/.test(css),
-    'styles.css still carries a prefers-color-scheme block',
-  );
-  assert.match(css, /color-scheme:\s*dark/);
+  assert.match(themeTags[0], /content="#2f2c28"/);
+  // The grounds alternate by chapter, by design; there is no OS-driven theme.
+  assert.ok(!/prefers-color-scheme/.test(css), 'styles.css carries a prefers-color-scheme block');
+  for (const t of ['dark', 'paper', 'stone']) {
+    const rule = (css.match(new RegExp(`\\.theme-${t}\\s*\\{([^}]*)\\}`)) || [])[1] || '';
+    assert.match(rule, /color-scheme:\s*(dark|light)/, `.theme-${t} does not declare color-scheme`);
+  }
+});
+
+test('every in-page project and chapter link has a target, and the menu covers every chapter', () => {
+  const chapters = [...html.matchAll(/<section[^>]*\sid="([^"]+)"/g)].map((m) => m[1]);
+  const menu = (html.match(/<nav class="menu"[\s\S]*?<\/nav>/) || [''])[0];
+  const missing = chapters.filter((id) => !menu.includes(`href="#${id}"`));
+  assert.deepEqual(missing, [], `chapters missing from the menu: ${missing.join(', ')}`);
+});
+
+test('decorative pictures are hidden from screen readers; meaningful ones are described', () => {
+  for (const id of ['work-grid', 'ix-preview']) {
+    assert.match(html, new RegExp(`id="${id}"[^>]*aria-hidden="true"`), `#${id} must be aria-hidden`);
+  }
+  const imgs = [...live.matchAll(/<img\s[^>]*>/g)].map((m) => m[0]);
+  const noAlt = imgs.filter((t) => !/\salt="/.test(t));
+  assert.deepEqual(noAlt, [], `images without an alt attribute: ${noAlt.join(' | ')}`);
+});
+
+test('the menu button says what it does', () => {
+  assert.match(html, /id="menu-btn"[^>]*aria-expanded="false"[^>]*aria-controls="menu"/);
+  assert.match(html, /<span class="menu-word">Menu<\/span>/);
 });
 
 test('the accessibility baseline is still in the markup', () => {

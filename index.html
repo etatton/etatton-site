@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -7,8 +7,8 @@
 <meta name="description" content="Ed Tatton builds a daily civic brief for Norwalk, a sourced ledger of surveillance-tech failures, a design studio, a wedding DJ business and private tools for family and self. This page is the index.">
 <meta name="author" content="Edward Joseph Tatton III">
 <link rel="canonical" href="https://etatton.com/">
-<!-- One scheme only: this page is dark, always. -->
-<meta name="theme-color" content="#141311">
+
+<meta name="theme-color" content="#2f2c28">
 
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://etatton.com/">
@@ -24,31 +24,28 @@
 <meta name="twitter:description" content="A daily civic brief for Norwalk, a sourced ledger of surveillance-tech failures, a design studio, a wedding DJ business and private tools for family and self.">
 <meta name="twitter:image" content="https://etatton.com/assets/og.png">
 
-<!-- Fonts are self-hosted in /assets/fonts. There is no third-party request on
-     this page at all any more. Only the two faces that set the first screen are
-     preloaded; Fraunces italic is below the fold and is left to @font-face. -->
-<link rel="preload" as="font" type="font/woff2" href="/assets/fonts/fraunces-normal-latin.woff2" crossorigin>
-<link rel="preload" as="font" type="font/woff2" href="/assets/fonts/inter-normal-latin.woff2" crossorigin>
+<!-- Fonts are self-hosted in /assets/fonts (OFL licences beside them). There is
+     no third-party request on this page. The two faces that set the cover are
+     preloaded; the italic is below the fold and is left to @font-face. -->
+<link rel="preload" as="font" type="font/woff2" href="/assets/fonts/instrument-serif-latin.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="/assets/fonts/inter-tight-latin.woff2" crossorigin>
 
-<!-- Favicon: "ET" monogram, off-white on the page's own ground, rounded 16.
-     A data URI cannot carry Fraunces, so the tab falls back to Georgia, which
-     is the nearest serif colour on every platform that matters. -->
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='16' fill='%23141311'/><text y='67' x='50' text-anchor='middle' font-size='45' font-family='Fraunces,Georgia,serif' letter-spacing='1' fill='%23F1ECE2'>ET</text></svg>">
+<!-- Favicon: "ET" monogram, cream on the cover's charcoal. A data URI cannot
+     carry the webfont, so the tab falls back to the nearest system serif. -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='16' fill='%232f2c28'/><text y='68' x='50' text-anchor='middle' font-size='48' font-family='Instrument Serif,Georgia,serif' fill='%23f3efe8'>ET</text></svg>">
 
 <link rel="stylesheet" href="/styles.css">
 
-<!-- Sets html.js before first paint so the reveal transition can start from
-     opacity:0 without hiding anything from a visitor whose JS is blocked.
-     main.js is deferred and would run too late to beat the paint. The timeout
-     is the failsafe for the one case the class alone gets wrong: if main.js
-     never runs (blocked, 404, ancient browser) nothing would ever reveal, so
-     the class is taken back off and the page shows as plain HTML. -->
+<!-- Sets html.js before first paint, so the folio can switch to its horizontal
+     layout without a flash of the stacked one. If main.js never runs (blocked,
+     404, ancient browser) the timeout takes the class back off and the page
+     stays the plain stacked document, which reads completely on its own. -->
 <script>
 (function () {
   var h = document.documentElement;
   h.className += ' js';
   setTimeout(function () {
-    if (!h.hasAttribute('data-revealing')) h.className = h.className.replace(/\bjs\b/, '');
+    if (!h.hasAttribute('data-ready')) h.className = h.className.replace(/\bjs\b/, '');
   }, 1500);
 })();
 </script>
@@ -85,346 +82,368 @@
 
 <a class="skip" href="#main">Skip to content</a>
 
-<!-- 1px sentinel: when it leaves the viewport the header has something above it
-     to separate itself from, and only then does the hairline appear. With no JS
-     there is simply never a rule, which is the honest default. -->
-<div id="scroll-sentinel" aria-hidden="true"></div>
+<!-- ── The spine ─────────────────────────────────────────────────────────
+     A fixed rail down the left edge (a top bar on phones). The progress line
+     on its inner edge is drawn by main.js; without it there is no line. -->
+<aside class="spine" aria-label="Site">
+  <button class="menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="menu">
+    <span class="menu-lines" aria-hidden="true"><span></span><span></span><span></span></span>
+    <span class="menu-word">Menu</span>
+  </button>
+  <p class="spine-edition">Index — 2026 edition</p>
+  <a class="spine-name" href="#cover">Ed Tatton</a>
+  <p class="spine-year">&copy; <span id="year">2026</span></p>
+  <span class="spine-progress" aria-hidden="true"><span id="progress-bar"></span></span>
+</aside>
 
-<header class="site-header" id="site-header">
-  <div class="wrap header-inner">
-    <a class="brand" href="#top">
-      <span class="brand-name">Ed Tatton</span>
-      <!-- The place label is carried visually by the hero eyebrow now. It stays
-           in the brand link's accessible name, unchanged, rather than being cut. -->
-      <span class="brand-where sr-only">Norwalk, Connecticut</span>
-    </a>
-    <nav class="site-nav" aria-label="Sections">
-      <a href="#projects">Projects</a>
-      <a href="#about">About</a>
-      <a href="#contact">Contact</a>
-    </nav>
-  </div>
-</header>
+<nav class="menu" id="menu" aria-label="Chapters" hidden>
+  <ol class="menu-list">
+    <li><a href="#cover"><span class="menu-num">00</span> Cover</a></li>
+    <li><a href="#intro"><span class="menu-num">I</span> Quick intro</a></li>
+    <li><a href="#work"><span class="menu-num">—</span> The work</a></li>
+    <li><a href="#projects"><span class="menu-num">II</span> Selected work</a></li>
+    <li><a href="#what"><span class="menu-num">III</span> What I do</a></li>
+    <li><a href="#about"><span class="menu-num">IV</span> About</a></li>
+    <li><a href="#contact"><span class="menu-num">V</span> Say hello</a></li>
+  </ol>
+  <p class="menu-mail"><a href="mailto:etatton@gmail.com">etatton@gmail.com</a></p>
+</nav>
 
-<main id="main">
+<main id="main" class="folio" tabindex="-1">
+<div class="viewport" id="viewport">
+<div class="track" id="track">
 
-  <!-- ── Hero ─────────────────────────────────────────────────────────── -->
-  <section class="hero reveal" aria-labelledby="hero-h">
-    <div class="wrap hero-inner">
-      <div class="hero-text">
-        <p class="eyebrow">Designer · builder · Norwalk, CT</p>
-        <h1 id="hero-h">I build things that <span class="nowrap-lg">make sense of a place.</span></h1>
-        <p class="lede">I'm Ed Tatton. I run a small design studio, publish a daily civic brief for my
-          city, keep a sourced ledger of surveillance-tech failures, DJ weddings on the side, and build private
-          tools for my family and myself. This page is the index.</p>
-        <p class="hero-actions">
-          <a class="btn btn-cta" href="#projects">See the projects</a>
-          <a class="quiet-link" href="#contact">or say hello</a>
-        </p>
+  <!-- ── Cover ─────────────────────────────────────────────────────────── -->
+  <section id="cover" class="panel cover theme-dark" aria-labelledby="cover-h">
+    <h1 id="cover-h" class="cover-name"><span class="line">Ed</span> <span class="line">Tatton</span></h1>
+    <p class="cover-lede">Designer and builder in Norwalk, Connecticut — making things that make
+      sense of a place.</p>
+    <div class="cover-foot">
+      <p class="cover-where">Norwalk, Connecticut<br><span class="clock" id="clock" aria-live="off"></span></p>
+      <p class="cover-status"><a href="#contact">Taking on<br>new work</a></p>
+      <p class="cover-scroll" aria-hidden="true">Scroll</p>
+    </div>
+  </section>
+
+  <!-- ── Chapter I · Quick intro ───────────────────────────────────────── -->
+  <section id="intro" class="panel intro theme-paper" aria-labelledby="intro-h">
+    <p class="chapter" aria-hidden="true">Chapter I</p>
+    <div class="intro-body">
+      <h2 id="intro-h" class="eyebrow">Quick intro</h2>
+      <p class="intro-statement">I'm Ed. I run a small design studio, publish a daily civic brief for
+        my city, keep a sourced ledger of surveillance-tech failures, DJ weddings, and build private
+        tools for my family and myself.</p>
+      <p class="intro-quote">“What I build when<br>nobody asked me to.”</p>
+      <p class="intro-more"><a class="lk lk-big" href="#about">More about me<span class="arrow" aria-hidden="true"> →</span></a></p>
+    </div>
+    <figure class="intro-portrait">
+      <img src="/assets/edward-tatton.jpg" width="400" height="400" alt="Portrait of Ed Tatton"
+           loading="lazy" decoding="async">
+    </figure>
+    <p class="intro-aside">Off the clock: wedding dance floors since 2000, and more city meeting
+      agendas than anyone should read.</p>
+  </section>
+
+  <!-- ── The work ──────────────────────────────────────────────────────────
+       Pinned while you scroll: the grid grows until the centre tile fills the
+       screen, the neighbours blur and the two words slide away (main.js).
+       The tiles are decoration; every project is described in words below. -->
+  <section id="work" class="panel work theme-paper" aria-labelledby="work-h">
+    <div class="work-stage" id="work-stage">
+      <h2 id="work-h" class="work-title">
+        <span class="work-word work-the">The</span>
+        <span class="work-word work-work">Work</span>
+      </h2>
+      <div class="work-grid" id="work-grid" aria-hidden="true">
+        <img class="tile" src="/assets/work/padovani.webp" alt="" width="1200" height="562" loading="lazy" decoding="async">
+        <img class="tile" src="/assets/work/flagstar.webp" alt="" width="1200" height="567" loading="lazy" decoding="async">
+        <img class="tile" src="/assets/work/rdb.webp" alt="" width="1200" height="570" loading="lazy" decoding="async">
+        <img class="tile" src="/assets/feature-nothing-to-see-here.jpg" alt="" width="1600" height="1000" loading="lazy" decoding="async">
+        <img class="tile tile-centre" src="/assets/feature-norwalk-sound.jpg" alt="" width="1600" height="1000" loading="lazy" decoding="async">
+        <img class="tile" src="/assets/work/time-to-go.webp" alt="" width="1200" height="560" loading="lazy" decoding="async">
+        <img class="tile" src="/assets/work/lucky8-poster.webp" alt="" width="1200" height="800" loading="lazy" decoding="async">
+        <img class="tile" src="/assets/work/nv200-wrap.webp" alt="" width="1200" height="752" loading="lazy" decoding="async">
+        <img class="tile" src="/assets/work/northeast-control.webp" alt="" width="1200" height="575" loading="lazy" decoding="async">
       </div>
-      <figure class="portrait">
-        <img src="/assets/edward-tatton.jpg" width="400" height="400"
-             alt="Portrait of Ed Tatton" fetchpriority="high">
-        <figcaption>Edward Joseph Tatton III · Norwalk, Connecticut</figcaption>
+    </div>
+  </section>
+
+  <!-- ── Chapter II · Selected work: the index ─────────────────────────────
+       Hovering (or focusing) a name shows its picture beside the cursor. -->
+  <section id="projects" class="panel index theme-stone" aria-labelledby="projects-h">
+    <p class="chapter" aria-hidden="true">Chapter II</p>
+    <h2 id="projects-h" class="eyebrow">Selected work</h2>
+    <ol class="ix-list" id="ix-list">
+      <li><a class="ix-link" href="#p-sound" data-i="0"><span class="ix-name">The Norwalk Sound</span><span class="ix-tag">Civic news</span></a></li>
+      <li><a class="ix-link" href="#p-ntsh" data-i="1"><span class="ix-name">Nothing To See Here</span><span class="ix-tag">Accountability</span></a></li>
+      <li><a class="ix-link" href="#p-et3" data-i="2"><span class="ix-name">ET3 Media</span><span class="ix-tag">Studio</span></a></li>
+      <li><a class="ix-link" href="#p-chewydown" data-i="3"><span class="ix-name">ChewyDown Productions</span><span class="ix-tag">Weddings</span></a></li>
+      <li><a class="ix-link" href="#p-private" data-i="4"><span class="ix-name">Built for a few people</span><span class="ix-tag">Private ×3</span></a></li>
+    </ol>
+    <div class="ix-foot">
+      <p class="ix-note">※ The private projects are described, never linked — on purpose.</p>
+      <p><a class="lk lk-big" href="#p-sound">Start with the Sound<span class="arrow" aria-hidden="true"> →</span></a></p>
+    </div>
+    <div class="ix-preview" id="ix-preview" aria-hidden="true">
+      <img src="/assets/feature-norwalk-sound.jpg" alt="" width="1600" height="1000" loading="lazy" decoding="async">
+      <img src="/assets/feature-nothing-to-see-here.jpg" alt="" width="1600" height="1000" loading="lazy" decoding="async">
+      <img src="/assets/work/padovani.webp" alt="" width="1200" height="562" loading="lazy" decoding="async">
+      <span class="ix-card ix-card-chewy"><img src="/assets/chewydown-logo.png" alt="" width="288" height="142" loading="lazy" decoding="async"></span>
+      <span class="ix-card ix-card-private">FamilyBot<br>HealthIntel<br>Ad Sandbox</span>
+    </div>
+  </section>
+
+  <!-- ── The projects, one panel each ───────────────────────────────────── -->
+  <div class="cases">
+
+    <article id="p-sound" class="panel case theme-paper" aria-labelledby="p-sound-h">
+      <div class="case-text">
+        <p class="case-num" aria-hidden="true">01</p>
+        <p class="case-label">Civic news · Live</p>
+        <h3 id="p-sound-h" class="case-name">The Norwalk Sound</h3>
+        <p>A daily civic brief for Norwalk, Connecticut. It reads the city's meeting agendas, packets
+          and minutes, local news, public filings, weather and tides, and publishes before breakfast —
+          with a Sunday newsletter and a full Spanish edition.</p>
+        <p class="case-why">The public record is public but scattered across portals nobody has time to
+          read. The Sound puts it in one place. Anything interpretive is AI-drafted and held for human
+          review; the record itself is published verbatim; no names from police logs, ever.</p>
+        <p><a class="lk" href="https://thenorwalksound.com" rel="noopener"
+              aria-label="Read The Norwalk Sound (thenorwalksound.com)">Read the Sound<span class="arrow" aria-hidden="true"> →</span></a></p>
+      </div>
+      <figure class="case-media">
+        <img src="/assets/feature-norwalk-sound.jpg" width="1600" height="1000"
+             alt="The Norwalk Sound homepage: the day’s brief under the masthead" loading="lazy" decoding="async">
       </figure>
-    </div>
-  </section>
+    </article>
 
-  <!-- ── Projects ─────────────────────────────────────────────────────── -->
-  <section id="projects" class="projects reveal" aria-labelledby="projects-h">
-    <div class="wrap">
-      <p class="eyebrow section-eyebrow">Projects</p>
-      <h2 id="projects-h">Things I've built</h2>
-      <p class="section-intro">Each one exists because something was scattered, unread, or unfair, and I
-        wanted a place where it wasn't. Public ones link out. Private ones are described but not linked,
-        on purpose.</p>
-
-      <!-- One list, three tiers, all in source order. The two group headings sit
-           in presentational <li>s so the markup stays a single valid <ol> while
-           each heading can span the full twelve columns above its group. -->
-      <ol class="projects-list">
-
-        <li class="group-li" role="presentation">
-          <h3 class="group-h" id="group-public">Out in the world</h3>
-        </li>
-
-        <!-- ── 01 — lead, text left / visual right ── -->
-        <li class="proj proj-lead proj-a">
-          <div class="proj-text">
-            <p class="proj-label"><span class="num">01</span> · Civic news · <span class="live-dot" aria-hidden="true"></span>Live</p>
-            <h4 class="proj-name">The Norwalk Sound</h4>
-            <p class="proj-what">A daily civic brief for Norwalk, Connecticut. It reads the city's meeting
-              agendas, packets and minutes, local news, public filings, weather and tides, and publishes
-              before breakfast, with a Sunday newsletter and a full Spanish edition.</p>
-            <p class="proj-why">The public record here is public but scattered across portals nobody has
-              time to read. The Sound puts it in one place. Anything interpretive is AI-drafted and held
-              for human review before it publishes; the record itself is published verbatim; no names from
-              police logs ever appear.</p>
-            <p class="proj-action">
-              <a class="lk" href="https://thenorwalksound.com" rel="noopener"
-                 aria-label="Read The Norwalk Sound (thenorwalksound.com)">Read The Norwalk Sound<span class="arrow" aria-hidden="true"> →</span></a>
-            </p>
-          </div>
-          <!-- Type-only placard until a screenshot exists. One command shoots the live
-               site and swaps the image in (see tests/shoot-feature.mjs):
-                 NODE_PATH=$(npm root -g) node tests/shoot-feature.mjs norwalk-sound https://thenorwalksound.com/
-               By hand: replace the .placard block with
-               <img src="/assets/feature-norwalk-sound.jpg" width="1600" height="1000"
-                    alt="The Norwalk Sound homepage: the day's brief under the masthead" loading="lazy" decoding="async">
-               add feature-media--img to the figure's class and drop aria-hidden. -->
-          <figure class="feature-media feature-media--img" data-slot="norwalk-sound">
-            <img src="/assets/feature-norwalk-sound.jpg" width="1600" height="1000"
-                 alt="The Norwalk Sound homepage: the day’s brief under the masthead" loading="lazy" decoding="async">
-          </figure>
-        </li>
-
-        <!-- ── 02 — lead, mirrored: visual left / text right ── -->
-        <li class="proj proj-lead proj-b">
-          <div class="proj-text">
-            <p class="proj-label"><span class="num">02</span> · Accountability · <span class="live-dot" aria-hidden="true"></span>Live</p>
-            <h4 class="proj-name">Nothing To See Here</h4>
-            <p class="proj-what">A running, sourced timeline of how license-plate readers, body cameras, AI
-              report-writers and the rest of the "public-safety technology" market are actually going, and
-              what the failures cost taxpayers. A counter in the corner, THE TAB, adds up the documented
-              public money.</p>
-            <p class="proj-why">The format is borrowed, with credit, from Web3 Is Going Just Great. Every
-              entry cites its sources and nothing publishes until code has confirmed a fetched source
-              supports the claim, the date and the dollar figure. The entries are deadpan on purpose; the
-              facts carry the irony.</p>
-            <p class="proj-action">
-              <a class="lk" href="https://nothingtosee.fyi" rel="noopener"
-                 aria-label="Visit Nothing To See Here (nothingtosee.fyi)">Visit Nothing To See Here<span class="arrow" aria-hidden="true"> →</span></a>
-            </p>
-          </div>
-          <!-- Homepage of nothingtosee.fyi as built from its repository on 2026-09-14,
-               THE TAB reading $10.1M across 32 entries. A static screenshot goes stale
-               as the counter grows; re-shoot at 1600×1000 and replace this file. -->
-          <figure class="feature-media feature-media--img" data-slot="nothing-to-see-here">
-            <img src="/assets/feature-nothing-to-see-here.jpg" width="1600" height="1000"
-                 alt="The Nothing To See Here homepage: the timeline of entries with THE TAB counter in the corner" loading="lazy" decoding="async">
-          </figure>
-        </li>
-
-        <!-- ── 03 — two-up, a step quieter ── -->
-        <li class="proj proj-half">
-          <!-- Decorative: the title directly beneath says the same thing, so the
-               mark is given an empty alt rather than repeating it to a reader. -->
-          <figure class="artifact artifact-chewydown">
-            <img src="/assets/chewydown-logo.png" width="288" height="142" alt=""
-                 loading="lazy" decoding="async">
-          </figure>
-          <p class="proj-label"><span class="num">03</span> · Weddings &amp; events · Since 2000</p>
-          <h4 class="proj-name">ChewyDown Productions</h4>
-          <p class="proj-what">My DJ side hustle. ChewyDown Productions has played weddings and private events since 2000, mainly in the Hudson Valley and across the tri-state area, alongside my best friend from childhood, DJ Big Mike.</p>
-          <p class="proj-why">It is the oldest project on this page by a couple of decades, and the only one whose success is measured by a full dance floor.</p>
-          <p class="proj-action">
-            <a class="lk" href="https://www.chewydown.com" rel="noopener"
-               aria-label="Visit ChewyDown Productions (www.chewydown.com)">Visit chewydown.com<span class="arrow" aria-hidden="true"> →</span></a>
-          </p>
-        </li>
-
-        <!-- ── 04 — two-up. The ET3 mark is cyan on transparent, which sits fine
-             on this ground; it now lives in the artifact box, not the copy flow. -->
-        <li class="proj proj-half">
-          <figure class="artifact artifact-et3">
-            <img src="/assets/et3-media-logo.png" width="440" height="242" alt="ET3 Media"
-                 loading="lazy" decoding="async">
-          </figure>
-          <p class="proj-label"><span class="num">04</span> · Studio · Since 2016</p>
-          <h4 class="proj-name">ET3 Media</h4>
-          <p class="proj-what">My design studio. Custom websites, brand identities, print and signage for
-            small businesses in Connecticut and beyond, plus the automation that keeps a one-person studio
-            running.</p>
-          <p class="proj-why">It is also the publisher behind The Norwalk Sound and Nothing To See Here.
-            If you need something built, this is the door.</p>
-          <p class="proj-action">
-            <a class="lk" href="https://et3.media" rel="noopener"
-               aria-label="Go to ET3 Media (et3.media)">Go to et3.media<span class="arrow" aria-hidden="true"> →</span></a>
-          </p>
-        </li>
-
-        <li class="group-li" role="presentation">
-          <h3 class="group-h" id="group-private">Built for a few people</h3>
-        </li>
-
-        <!-- ── 05–07 — the private ledger: three columns, hairlines, no boxes ── -->
-        <li class="proj proj-ledger">
-          <p class="proj-label"><span class="num">05</span> · Family archive · Private</p>
-          <h4 class="proj-name">FamilyBot</h4>
-          <p class="proj-what">A private archive for two families: a family tree, people pages, recipes,
-            photos and stories, built to the standard "could your grandmother use this on her phone,
-            alone, on the first try?"</p>
-          <p class="proj-why">Genealogy lives in spreadsheets and subscription sites. This puts the proved
-            research, the scanned certificates and the recipes in one warm place, with every edit logged
-            and every invite admin-only.</p>
-          <p class="proj-action no-link">No link: invite-only, by design.</p>
-        </li>
-
-        <li class="proj proj-ledger">
-          <p class="proj-label"><span class="num">06</span> · Personal briefing · Private</p>
-          <h4 class="proj-name">HealthIntel</h4>
-          <p class="proj-what">A news-intelligence briefing built for one reader. It ingests healthcare
-            trade press, publisher newsletters and news feeds, clusters the same story across outlets,
-            ranks by relevance and writes a daily brief and a weekly digest.</p>
-          <p class="proj-why">It runs under one honesty rule: it may never state a fact that wasn't in the
-            retrieved headline or blurb, and it says which outlet is covering what rather than pretending
-            to have read the article.</p>
-          <p class="proj-action no-link">No link: single-reader tool behind a login.</p>
-        </li>
-
-        <li class="proj proj-ledger">
-          <p class="proj-label"><span class="num">07</span> · Workplace tools · Internal</p>
-          <h4 class="proj-name">Marketing Dashboard &amp; Ad Sandbox</h4>
-          <p class="proj-what">Two browser-only tools for a college marketing team. The dashboard turns
-            exported campaign CSVs from social, email and web into charts and branded PDF reports. The Ad
-            Sandbox tests ad copy against fifteen synthetic student personas before it runs.</p>
-          <p class="proj-why">No install, no server, no admin rights: they open from a shared drive by
-            double-click, and the data never leaves the machine.</p>
-          <p class="proj-action no-link">No link: lives on an internal network drive.</p>
-        </li>
-      </ol>
-    </div>
-  </section>
-
-  <!-- ── Pull quote ───────────────────────────────────────────────────────
-       A deliberate repetition: this sentence also stays in the About copy,
-       where it has always been. Ed asked for the echo. -->
-  <aside class="pullquote reveal">
-    <div class="wrap">
-      <p>The other projects on this page are what I build when nobody asked me to.</p>
-    </div>
-  </aside>
-
-  <!-- ── About ────────────────────────────────────────────────────────── -->
-  <section id="about" class="about reveal" aria-labelledby="about-h">
-    <div class="wrap about-inner">
-      <div class="about-text">
-        <p class="eyebrow section-eyebrow">About</p>
-        <h2 id="about-h">About</h2>
-        <p>I'm Edward Joseph Tatton III. Ed is fine. I've spent nearly twenty years in creative
-          communications at a college in New York, where I lead the team behind its brand, print,
-          photography and web, and where I more recently led its AI readiness work: the survey, the
-          strategic plan, the advisory committee and the guidance.</p>
-        <p>ET3 Media is the studio I run alongside that. The other projects on this page are what I build
-          when nobody asked me to.</p>
-        <p>I hold a master's in Information Design &amp; Technology and a bachelor's in Photography and Art
-          History, and I've taught graphic design as an adjunct. I live in Norwalk, Connecticut.</p>
+    <article id="p-ntsh" class="panel case theme-paper" aria-labelledby="p-ntsh-h">
+      <div class="case-text">
+        <p class="case-num" aria-hidden="true">02</p>
+        <p class="case-label">Accountability · Live</p>
+        <h3 id="p-ntsh-h" class="case-name">Nothing To See Here</h3>
+        <p>A running, sourced timeline of how license-plate readers, body cameras, AI report-writers and
+          the rest of the "public-safety technology" market are actually going — and what the failures
+          cost taxpayers. THE TAB, in the corner, adds up the documented public money.</p>
+        <p class="case-why">The format is borrowed, with credit, from Web3 Is Going Just Great. Nothing
+          publishes until code has confirmed a fetched source supports the claim, the date and the dollar
+          figure. The entries are deadpan; the facts carry the irony.</p>
+        <p><a class="lk" href="https://nothingtosee.fyi" rel="noopener"
+              aria-label="Visit Nothing To See Here (nothingtosee.fyi)">Run the tab<span class="arrow" aria-hidden="true"> →</span></a></p>
       </div>
-      <dl class="facts">
-        <div class="fact">
-          <dt>Based</dt>
-          <dd>Norwalk, Connecticut</dd>
-        </div>
-        <div class="fact">
-          <dt>Studio</dt>
-          <dd><a class="lk" href="https://et3.media" rel="noopener"
-                 aria-label="ET3 Media (et3.media)">et3.media<span class="arrow" aria-hidden="true"> →</span></a></dd>
-        </div>
-        <div class="fact">
-          <dt>Elsewhere</dt>
-          <dd>
-            <a class="lk" href="https://www.linkedin.com/in/edtatton/" rel="noopener"
-               aria-label="LinkedIn (www.linkedin.com)">LinkedIn<span class="arrow" aria-hidden="true"> →</span></a>,
-            <a class="lk" href="https://www.instagram.com/2_weeks_on_mars" rel="noopener"
-               aria-label="Instagram (www.instagram.com)">Instagram<span class="arrow" aria-hidden="true"> →</span></a>
-          </dd>
-        </div>
-      </dl>
-    </div>
-  </section>
+      <figure class="case-media">
+        <img src="/assets/feature-nothing-to-see-here.jpg" width="1600" height="1000"
+             alt="The Nothing To See Here homepage: the timeline of entries with THE TAB counter in the corner" loading="lazy" decoding="async">
+      </figure>
+    </article>
 
-  <!-- ── Contact ──────────────────────────────────────────────────────── -->
-  <section id="contact" class="contact reveal" aria-labelledby="contact-h">
-    <div class="wrap contact-inner">
-      <div class="contact-intro">
-        <p class="eyebrow section-eyebrow">Contact</p>
-        <h2 id="contact-h">Say hello</h2>
-        <p>A question about one of the projects, a tip for The Norwalk Sound or Nothing To See Here, or
-          something you'd like built. I read every message and reply personally, usually within a couple
-          of days.</p>
-
-        <!-- Two routes, set as a ledger. The addresses are repeated from the two
-             fineprint lines below, which stay exactly as they were written. -->
-        <dl class="routes">
-          <div class="route">
-            <dt>General</dt>
-            <dd><a href="mailto:etatton@gmail.com">etatton@gmail.com</a></dd>
-          </div>
-          <div class="route">
-            <dt>Tips</dt>
-            <dd><a href="mailto:tips@nothingtosee.fyi">tips@nothingtosee.fyi</a></dd>
-          </div>
-        </dl>
-
-        <p class="fineprint">Prefer email? <a href="mailto:etatton@gmail.com">etatton@gmail.com</a></p>
-        <p class="fineprint">Tips for Nothing To See Here can go straight to
-          <a href="mailto:tips@nothingtosee.fyi">tips@nothingtosee.fyi</a>. For The Norwalk Sound, use the
-          form below and say so.</p>
-        <p class="fineprint">
-          <a class="lk" href="https://www.linkedin.com/in/edtatton/" rel="noopener"
-             aria-label="LinkedIn (www.linkedin.com)">LinkedIn<span class="arrow" aria-hidden="true"> →</span></a> ·
-          <a class="lk" href="https://www.instagram.com/2_weeks_on_mars" rel="noopener"
-             aria-label="Instagram (www.instagram.com)">Instagram<span class="arrow" aria-hidden="true"> →</span></a>
-        </p>
+    <article id="p-et3" class="panel case theme-paper" aria-labelledby="p-et3-h">
+      <div class="case-text">
+        <p class="case-num" aria-hidden="true">03</p>
+        <p class="case-label">Studio · Since 2016</p>
+        <h3 id="p-et3-h" class="case-name">ET3 Media</h3>
+        <p>My design studio. Custom websites, brand identities, print and signage for small businesses in
+          Connecticut and beyond — plus the automation that keeps a one-person studio running.</p>
+        <p class="case-why">It is also the publisher behind The Norwalk Sound and Nothing To See Here. If
+          you need something built, this is the door.</p>
+        <p><a class="lk" href="https://et3.media" rel="noopener"
+              aria-label="Go to ET3 Media (et3.media)">Go to et3.media<span class="arrow" aria-hidden="true"> →</span></a></p>
       </div>
+      <figure class="case-media case-media-stack">
+        <img src="/assets/work/padovani.webp" width="1200" height="562"
+             alt="A website ET3 Media built for Padovani Asset Management" loading="lazy" decoding="async">
+        <img src="/assets/work/lucky8-poster.webp" width="1200" height="800"
+             alt="A vehicle-inventory poster ET3 Media designed for print" loading="lazy" decoding="async">
+      </figure>
+    </article>
 
-      <div class="contact-form-col">
-        <noscript>
-          <p class="notice">JavaScript is switched off, so the form below can't send. Email
-            <a href="mailto:etatton@gmail.com">etatton@gmail.com</a> instead — it reaches me just as fast.</p>
-        </noscript>
+    <article id="p-chewydown" class="panel case case-dark theme-dark" aria-labelledby="p-chewy-h">
+      <div class="case-text">
+        <p class="case-num" aria-hidden="true">04</p>
+        <p class="case-label">Weddings &amp; events · Since 2000</p>
+        <h3 id="p-chewy-h" class="case-name">ChewyDown Productions</h3>
+        <p>My DJ side hustle. ChewyDown Productions has played weddings and private events since 2000,
+          mainly in the Hudson Valley and across the tri-state area, alongside my best friend from
+          childhood, DJ Big Mike.</p>
+        <p class="case-why">The oldest project here by a couple of decades, and the only one whose success
+          is measured by a full dance floor.</p>
+        <p><a class="lk" href="https://www.chewydown.com" rel="noopener"
+              aria-label="Book ChewyDown Productions (www.chewydown.com)">Book the floor<span class="arrow" aria-hidden="true"> →</span></a></p>
+      </div>
+      <figure class="case-media case-media-logo">
+        <img src="/assets/chewydown-logo.png" width="288" height="142" alt="" loading="lazy" decoding="async">
+      </figure>
+    </article>
 
-        <!-- No `action` on purpose: the endpoint takes JSON, not a form POST.
-             Without JS the noscript note above carries the mailto. -->
-        <form id="contact-form" novalidate>
-          <p class="field">
-            <label for="f-name">Your name</label>
-            <input id="f-name" name="name" type="text" autocomplete="name" maxlength="200" required>
-          </p>
-          <p class="field">
-            <label for="f-email">Email</label>
-            <input id="f-email" name="email" type="email" autocomplete="email" maxlength="320" required>
-          </p>
-          <p class="field">
-            <label for="f-message">Message</label>
-            <textarea id="f-message" name="message" rows="6" maxlength="8000" required></textarea>
-          </p>
-          <p class="hp" aria-hidden="true">
-            <label for="f-company">Company website</label>
-            <input id="f-company" name="company_website" type="text" tabindex="-1" autocomplete="off">
-          </p>
-          <p class="form-actions">
-            <button class="btn btn-fill" id="submit-btn" type="submit">Send message</button>
-          </p>
-          <p id="form-status" class="status" role="status" aria-live="polite"></p>
-        </form>
-
-        <div id="sent-card" class="sent-card" hidden>
-          <h3 id="sent-h">Thanks.</h3>
-          <p>Your message is on its way. I'll reply from
-            <a href="mailto:etatton@gmail.com">etatton@gmail.com</a>, usually within a couple of days.</p>
-          <p><button type="button" class="linkish" id="send-another">Send another</button></p>
+    <article id="p-private" class="panel ledger theme-paper" aria-labelledby="p-private-h">
+      <p class="case-num" aria-hidden="true">05—07</p>
+      <h3 id="p-private-h" class="case-name">Built for a few people</h3>
+      <div class="ledger-cols">
+        <div class="ledger-item">
+          <p class="case-label">Family archive · Private</p>
+          <h4>FamilyBot</h4>
+          <p>A private archive for two families: a tree, people pages, recipes, photos and stories, built
+            to one standard — could your grandmother use it on her phone, alone, on the first try?</p>
+          <p class="no-link">※ No link: invite-only, by design.</p>
+        </div>
+        <div class="ledger-item">
+          <p class="case-label">Personal briefing · Private</p>
+          <h4>HealthIntel</h4>
+          <p>A news-intelligence briefing built for one reader. It clusters the same healthcare story
+            across outlets and writes a daily brief under one rule: never state a fact that wasn't in the
+            headline or the blurb.</p>
+          <p class="no-link">※ No link: single-reader tool behind a login.</p>
+        </div>
+        <div class="ledger-item">
+          <p class="case-label">Workplace tools · Internal</p>
+          <h4>Marketing Dashboard &amp; Ad Sandbox</h4>
+          <p>Two browser-only tools for a college marketing team: campaign CSVs into charts and branded
+            PDFs, and ad copy tested against fifteen synthetic student personas before it runs. No install,
+            no server; the data never leaves the machine.</p>
+          <p class="no-link">※ No link: lives on an internal network drive.</p>
         </div>
       </div>
-    </div>
-  </section>
-
-</main>
-
-<footer class="site-footer">
-  <div class="wrap footer-inner">
-    <p class="copy">&copy; <span id="year">2026</span> Edward Joseph Tatton III · Norwalk, Connecticut</p>
-    <p class="footer-links">
-      <a href="mailto:etatton@gmail.com">Email</a>
-      <a class="lk" href="https://www.linkedin.com/in/edtatton/" rel="noopener"
-         aria-label="LinkedIn (www.linkedin.com)">LinkedIn<span class="arrow" aria-hidden="true"> →</span></a>
-      <a class="lk" href="https://www.instagram.com/2_weeks_on_mars" rel="noopener"
-         aria-label="Instagram (www.instagram.com)">Instagram<span class="arrow" aria-hidden="true"> →</span></a>
-      <a class="lk" href="https://et3.media" rel="noopener"
-         aria-label="ET3 Media (et3.media)">et3.media<span class="arrow" aria-hidden="true"> →</span></a>
-    </p>
+    </article>
   </div>
-</footer>
+
+  <!-- ── Chapter III · What I do ───────────────────────────────────────────
+       Each column brings up a picture behind itself on hover or focus. -->
+  <section id="what" class="panel what theme-dark" aria-labelledby="what-h">
+    <div class="what-head">
+      <p class="chapter" aria-hidden="true">Chapter III</p>
+      <h2 id="what-h" class="eyebrow">What I do</h2>
+      <p class="what-statement">Making scattered things legible — in pixels, in print and in code.</p>
+    </div>
+    <ol class="cols">
+      <li class="col" tabindex="0">
+        <img class="col-bg" src="/assets/work/padovani.webp" alt="" width="1200" height="562" loading="lazy" decoding="async">
+        <p class="col-num" aria-hidden="true">01</p>
+        <h3 class="col-name">Studio design</h3>
+        <p class="col-text">Websites, brand identities, print and signage for small businesses, through
+          ET3 Media.</p>
+      </li>
+      <li class="col" tabindex="0">
+        <img class="col-bg" src="/assets/feature-norwalk-sound.jpg" alt="" width="1600" height="1000" loading="lazy" decoding="async">
+        <p class="col-num" aria-hidden="true">02</p>
+        <h3 class="col-name">Civic publishing</h3>
+        <p class="col-text">Public records turned into something a neighbour will actually read — sourced,
+          verbatim where it counts.</p>
+      </li>
+      <li class="col" tabindex="0">
+        <img class="col-bg" src="/assets/feature-nothing-to-see-here.jpg" alt="" width="1600" height="1000" loading="lazy" decoding="async">
+        <p class="col-num" aria-hidden="true">03</p>
+        <h3 class="col-name">Tools &amp; automation</h3>
+        <p class="col-text">Software for one family, one reader, one team: honest by construction, boring
+          to operate.</p>
+      </li>
+      <li class="col" tabindex="0">
+        <img class="col-bg col-bg-logo" src="/assets/chewydown-logo.png" alt="" width="288" height="142" loading="lazy" decoding="async">
+        <p class="col-num" aria-hidden="true">04</p>
+        <h3 class="col-name">Full dance floors</h3>
+        <p class="col-text">Weddings and private events since 2000, with ChewyDown Productions.</p>
+      </li>
+    </ol>
+  </section>
+
+  <!-- ── Chapter IV · About ─────────────────────────────────────────────── -->
+  <section id="about" class="panel about theme-paper" aria-labelledby="about-h">
+    <p class="chapter" aria-hidden="true">Chapter IV</p>
+    <div class="about-text">
+      <h2 id="about-h" class="eyebrow">About</h2>
+      <p>I'm Edward Joseph Tatton III. Ed is fine. I've spent nearly twenty years in creative
+        communications at a college in New York, where I lead the team behind its brand, print,
+        photography and web — and where I more recently led its AI readiness work: the survey, the
+        strategic plan, the advisory committee and the guidance.</p>
+      <p>ET3 Media is the studio I run alongside that. Everything else here is what I build when
+        nobody asked me to.</p>
+      <p>I hold a master's in Information Design &amp; Technology and a bachelor's in Photography and Art
+        History, and I've taught graphic design as an adjunct. I live in Norwalk, Connecticut.</p>
+    </div>
+    <blockquote class="pullquote"><p>The other projects on this page are what I build when nobody
+      asked me to.</p></blockquote>
+    <dl class="facts">
+      <div class="fact"><dt>Based</dt><dd>Norwalk, Connecticut</dd></div>
+      <div class="fact"><dt>Studio</dt><dd><a class="lk" href="https://et3.media" rel="noopener"
+          aria-label="ET3 Media (et3.media)">et3.media<span class="arrow" aria-hidden="true"> →</span></a></dd></div>
+      <div class="fact"><dt>Elsewhere</dt><dd>
+        <a class="lk" href="https://www.linkedin.com/in/edtatton/" rel="noopener"
+           aria-label="LinkedIn (www.linkedin.com)">LinkedIn<span class="arrow" aria-hidden="true"> →</span></a>
+        <a class="lk" href="https://www.instagram.com/2_weeks_on_mars" rel="noopener"
+           aria-label="Instagram (www.instagram.com)">Instagram<span class="arrow" aria-hidden="true"> →</span></a>
+      </dd></div>
+    </dl>
+  </section>
+
+  <!-- ── Chapter V · Contact ────────────────────────────────────────────── -->
+  <section id="contact" class="panel contact theme-dark" aria-labelledby="contact-h">
+    <div class="contact-intro">
+      <p class="chapter" aria-hidden="true">Chapter V</p>
+      <h2 id="contact-h" class="contact-title">Say hello</h2>
+      <p>A question about one of the projects, a tip for The Norwalk Sound or Nothing To See Here, or
+        something you'd like built. I read every message and reply personally, usually within a couple
+        of days.</p>
+      <dl class="routes">
+        <div class="route"><dt>General</dt><dd><a href="mailto:etatton@gmail.com">etatton@gmail.com</a></dd></div>
+        <div class="route"><dt>Tips</dt><dd><a href="mailto:tips@nothingtosee.fyi">tips@nothingtosee.fyi</a></dd></div>
+      </dl>
+      <p class="fineprint">Tips for The Norwalk Sound: use the form and say so.</p>
+    </div>
+
+    <div class="contact-form-col">
+      <noscript>
+        <p class="notice">JavaScript is switched off, so the form below can't send. Email
+          <a href="mailto:etatton@gmail.com">etatton@gmail.com</a> instead — it reaches me just as fast.</p>
+      </noscript>
+
+      <!-- No `action` on purpose: the endpoint takes JSON, not a form POST.
+           Without JS the noscript note above carries the mailto. -->
+      <form id="contact-form" novalidate>
+        <p class="field">
+          <label for="f-name">Your name</label>
+          <input id="f-name" name="name" type="text" autocomplete="name" maxlength="200" required>
+        </p>
+        <p class="field">
+          <label for="f-email">Email</label>
+          <input id="f-email" name="email" type="email" autocomplete="email" maxlength="320" required>
+        </p>
+        <p class="field">
+          <label for="f-message">Message</label>
+          <textarea id="f-message" name="message" rows="5" maxlength="8000" required></textarea>
+        </p>
+        <p class="hp" aria-hidden="true">
+          <label for="f-company">Company website</label>
+          <input id="f-company" name="company_website" type="text" tabindex="-1" autocomplete="off">
+        </p>
+        <p class="form-actions">
+          <button class="btn" id="submit-btn" type="submit">Send message</button>
+        </p>
+        <p id="form-status" class="status" role="status" aria-live="polite"></p>
+      </form>
+
+      <div id="sent-card" class="sent-card" hidden>
+        <h3 id="sent-h">Thanks.</h3>
+        <p>Your message is on its way. I'll reply from
+          <a href="mailto:etatton@gmail.com">etatton@gmail.com</a>, usually within a couple of days.</p>
+        <p><button type="button" class="linkish" id="send-another">Send another</button></p>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+      <p>&copy; Edward Joseph Tatton III · Norwalk, Connecticut</p>
+      <p class="footer-links">
+        <a class="lk" href="https://www.linkedin.com/in/edtatton/" rel="noopener"
+           aria-label="LinkedIn (www.linkedin.com)">LinkedIn</a>
+        <a class="lk" href="https://www.instagram.com/2_weeks_on_mars" rel="noopener"
+           aria-label="Instagram (www.instagram.com)">Instagram</a>
+        <a class="lk" href="https://et3.media" rel="noopener"
+           aria-label="ET3 Media (et3.media)">et3.media</a>
+        <a class="lk" href="#cover">Back to the cover</a>
+      </p>
+    </footer>
+  </section>
+
+</div>
+</div>
+</main>
 
 <script src="/main.js" defer></script>
 </body>

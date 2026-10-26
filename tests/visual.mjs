@@ -161,25 +161,80 @@ try {
     await page.close();
   }
 
-  /* ── The header hairline appears only once the page has moved ───────── */
+  /* ── The horizontal folio: on, scrolling sideways, zooming, navigable ── */
   {
-    const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
+    const page = await browser.newPage({ viewport: { width: 1600, height: 1000 } });
     await settle(page);
-    const top = await page.evaluate(
-      () => getComputedStyle(document.getElementById('site-header')).borderBottomWidth,
-    );
-    await page.evaluate(() => window.scrollTo(0, 200));
-    await page.waitForTimeout(350);
-    const scrolled = await page.evaluate(
-      () => getComputedStyle(document.getElementById('site-header')).borderBottomWidth,
-    );
-    record('header hairline absent at scrollY 0', parseFloat(top) === 0, `border-bottom ${top}`);
-    record(
-      'header hairline present after scrolling 200px',
-      parseFloat(scrolled) > 0,
-      `border-bottom ${scrolled}`,
-    );
+    const isH = await page.evaluate(() => document.documentElement.classList.contains('h'));
+    record('folio: horizontal mode on a wide mouse-driven screen', isH);
+
+    const xOf = (sel) => page.evaluate((s) => Math.round(document.querySelector(s).getBoundingClientRect().x), sel);
+    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+    await page.waitForTimeout(1600);
+    const contactX = await xOf('#contact');
+    record('folio: scrolling to the end brings Chapter V to the left edge', Math.abs(contactX - 84) <= 2, `#contact at x=${contactX}`);
+    await page.screenshot({ path: `${OUT}/shot-folio-end.png` });
+
+    // The work zoom: postcard at the start of the pin, full bleed near the end.
+    const scaleAt = async (f) => {
+      await page.evaluate((f) => {
+        const work = document.getElementById('work');
+        let x = 0; for (let el = work; el && el.id !== 'track'; el = el.offsetParent) x += el.offsetLeft;
+        const vw = document.getElementById('viewport').clientWidth;
+        window.scrollTo(0, x + (work.offsetWidth - vw) * f);
+      }, f);
+      await page.waitForTimeout(1500);
+      return page.evaluate(() => parseFloat(getComputedStyle(document.getElementById('work-grid')).getPropertyValue('--s')));
+    };
+    const s0 = await scaleAt(0);
+    const s1 = await scaleAt(0.9);
+    await page.screenshot({ path: `${OUT}/shot-folio-work.png` });
+    record('folio: the work grid grows from a postcard to full bleed', s0 < 0.4 && s1 > 0.97, `scale ${s0} -> ${s1}`);
+    const stageX = await xOf('#work-stage');
+    record('folio: the work stage stays pinned while it zooms', Math.abs(stageX - 84) <= 2, `stage at x=${stageX}`);
+
+    // Chapter II: hovering a name brings up its picture.
+    await page.evaluate(() => { location.hash = ''; });
+    await page.click('#menu-btn');
+    await page.click('.menu-list a[href="#projects"]');
+    await page.waitForTimeout(1600);
+    const name = await page.locator('.ix-link').nth(1).locator('.ix-name').boundingBox();
+    await page.mouse.move(name.x + 40, name.y + 20);
+    await page.mouse.move(name.x + 90, name.y + 30, { steps: 6 });
+    await page.waitForTimeout(700);
+    const preview = await page.evaluate(() => {
+      const p = document.getElementById('ix-preview');
+      return { on: p.classList.contains('on'), shown: [...p.children].findIndex((c) => c.classList.contains('shown')) };
+    });
+    record('folio: hovering a project name shows its picture', preview.on && preview.shown === 1, JSON.stringify(preview));
+    await page.screenshot({ path: `${OUT}/shot-folio-hover.png` });
+
+    // Keyboard: every focus stop is on screen when it lands.
+    await page.goto(URL, { waitUntil: 'networkidle' });
+    await page.waitForTimeout(600);
+    const off = [];
+    for (let k = 0; k < 40; k += 1) {
+      await page.keyboard.press('Tab');
+      await page.waitForTimeout(120);
+      const r = await page.evaluate(() => {
+        const el = document.activeElement;
+        const b = el.getBoundingClientRect();
+        return { t: (el.textContent || el.id || el.tagName).trim().slice(0, 30), x: Math.round(b.x), w: Math.round(b.width) };
+      });
+      if (r.x < 0 || r.x + Math.min(r.w, 120) > 1600) off.push(r);
+    }
+    record('folio: every keyboard focus stop lands on screen', off.length === 0, off.length ? JSON.stringify(off) : '40 stops checked');
     await page.close();
+  }
+
+  /* ── Reduced motion: the stacked document, no sideways scroll ────────── */
+  {
+    const ctx = await browser.newContext({ viewport: { width: 1600, height: 1000 }, reducedMotion: 'reduce' });
+    const page = await ctx.newPage();
+    await settle(page);
+    const isH = await page.evaluate(() => document.documentElement.classList.contains('h'));
+    record('reduced motion: the folio stays stacked', !isH);
+    await ctx.close();
   }
 
   /* ── With JavaScript off, nothing is hidden and the mailto is offered ── */
@@ -192,7 +247,7 @@ try {
     await page.waitForTimeout(400);
     const state = await page.evaluate(() => 0).catch(() => null); // evaluate is unavailable
     void state;
-    const hidden = await page.$$eval('section, .pullquote', (els) =>
+    const hidden = await page.$$eval('section, article, .pullquote', (els) =>
       els
         .filter((el) => parseFloat(getComputedStyle(el).opacity) < 0.99)
         .map((el) => el.className),
@@ -223,6 +278,6 @@ const failed = results.filter((r) => !r.pass);
 console.log(`\n${results.length - failed.length}/${results.length} checks passed`);
 console.log(
   `screenshots: ${OUT}/shot-360.png, ${OUT}/shot-mobile.png, ${OUT}/shot-desktop.png, ` +
-    `${OUT}/shot-wide.png, ${OUT}/shot-hero.png`,
+    `${OUT}/shot-wide.png, ${OUT}/shot-hero.png, ${OUT}/shot-folio-*.png`,
 );
 process.exit(failed.length ? 1 : 0);
