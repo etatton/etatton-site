@@ -1,30 +1,25 @@
 /* The copy freeze.
 
-   Every visible sentence that was on origin/main must still be on the page.
-   The old markup is pulled straight out of git rather than kept as a fixture,
-   so this cannot drift: if a sentence is edited away, this test goes red.
+   Every visible string on the page is pinned in tests/copy.snapshot.json.
+   Changing copy is allowed — it was rewritten for the 2026 folio — but it
+   has to be deliberate: edit the page, then refresh the snapshot with
 
-   Two decorative fragments are normalised out of BOTH sides before comparing,
-   because the redesign swapped one for the other and neither is copy:
-     · the "↗" glyph (old) and the "→" glyph (new), with their spacing
-     · the screen-reader-only "(opens example.com)" strings, replaced by
-       aria-label on the anchor itself
-   Nothing else is stripped. Text that is visually hidden (.sr-only) still
-   counts as copy here — it is still read aloud, it is only not drawn. */
+     UPDATE_COPY=1 node --test tests/copy.test.mjs
+
+   and the diff of the snapshot is what a reviewer reads. Without that step
+   an edit that drops or changes a sentence turns this test red.
+
+   Two decorative fragments are normalised out before comparing: the "→"
+   glyph with its spacing, and screen-reader-only "(opens example.com)"
+   strings. Text that is visually hidden still counts as copy here. */
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
-import { execFileSync } from 'node:child_process';
+import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
-
-const OLD = execFileSync('git', ['show', 'origin/main:index.html'], {
-  cwd: ROOT,
-  encoding: 'utf8',
-  maxBuffer: 8 * 1024 * 1024,
-});
+const SNAPSHOT = join(ROOT, 'tests', 'copy.snapshot.json');
 const NEW = readFileSync(join(ROOT, 'index.html'), 'utf8');
 
 const OF_INTEREST = new Set([
@@ -59,6 +54,7 @@ const normalise = (s) =>
 function extract(html) {
   const clean = html
     .replace(/<!--[\s\S]*?-->/g, '')
+    .replace(/<br\s*\/?>/gi, ' ')
     .replace(/<script\b[\s\S]*?<\/script>/gi, '')
     .replace(/<style\b[\s\S]*?<\/style>/gi, '');
 
@@ -97,49 +93,57 @@ function extract(html) {
   return out.filter(Boolean);
 }
 
-const oldStrings = [...new Set(extract(OLD))];
 const newStrings = extract(NEW);
-const newBlob = newStrings.join('\n');
 
-test('the old page yields a real body of copy to check against', () => {
-  assert.ok(oldStrings.length >= 40, `only ${oldStrings.length} strings extracted from origin/main`);
+if (process.env.UPDATE_COPY === '1') {
+  writeFileSync(SNAPSHOT, JSON.stringify(newStrings, null, 2) + '\n');
+}
+const pinned = existsSync(SNAPSHOT) ? JSON.parse(readFileSync(SNAPSHOT, 'utf8')) : [];
+
+test('the snapshot holds a real body of copy', () => {
+  assert.ok(pinned.length >= 60, `only ${pinned.length} strings in copy.snapshot.json`);
 });
 
-test('every visible string from origin/main is still on the page', () => {
-  const missing = oldStrings.filter((s) => !newBlob.includes(s));
-  assert.deepEqual(missing, [], `copy lost:\n  - ${missing.join('\n  - ')}`);
+test('every visible string matches the pinned copy, in order', () => {
+  const missing = pinned.filter((s) => !newStrings.includes(s));
+  const added = newStrings.filter((s) => !pinned.includes(s));
+  assert.deepEqual(
+    { missing, added },
+    { missing: [], added: [] },
+    'copy changed — if that was intended, run UPDATE_COPY=1 node --test tests/copy.test.mjs',
+  );
+  assert.deepEqual(newStrings, pinned, 'copy is the same but its order changed');
 });
 
-test('the H1 is unchanged', () => {
-  const h1 = (s) =>
-    normalise(((s.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i) || [])[1] || '').replace(/<[^>]+>/g, ''));
-  assert.equal(h1(NEW), h1(OLD));
+test('the H1 is the name', () => {
+  const h1 = normalise((NEW.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i) || [])[1].replace(/<[^>]+>/g, ' '));
+  assert.equal(h1, 'Ed Tatton');
 });
 
-test('section order is unchanged', () => {
-  const order = (s) => [...s.matchAll(/<section[^>]*\sid="([^"]+)"/g)].map((x) => x[1]);
-  assert.deepEqual(order(NEW), order(OLD));
+test('the chapters are all there, in reading order', () => {
+  const order = [...NEW.matchAll(/<section[^>]*\sid="([^"]+)"/g)].map((x) => x[1]);
+  assert.deepEqual(order, ['cover', 'intro', 'work', 'projects', 'what', 'about', 'contact']);
 });
 
-test('the seven project names are present, in the original order', () => {
-  const names = [
+test('every project is named, in order', () => {
+  const names = [...NEW.matchAll(/<h3[^>]*class="case-name"[^>]*>([\s\S]*?)<\/h3>/g)].map((m) => normalise(m[1]));
+  assert.deepEqual(names, [
     'The Norwalk Sound',
     'Nothing To See Here',
-    'ChewyDown Productions',
     'ET3 Media',
-    'FamilyBot',
-    'HealthIntel',
-    'Marketing Dashboard & Ad Sandbox',
-  ];
-  const found = [...NEW.matchAll(/<h4[^>]*class="proj-name"[^>]*>([\s\S]*?)<\/h4>/g)]
-    .map((m) => normalise(m[1]));
-  assert.deepEqual(found, names);
+    'ChewyDown Productions',
+    'Built for a few people',
+  ]);
+  const privateNames = [...NEW.matchAll(/<h4>([\s\S]*?)<\/h4>/g)].map((m) => normalise(m[1]));
+  assert.deepEqual(privateNames, ['FamilyBot', 'HealthIntel', 'Marketing Dashboard & Ad Sandbox']);
 });
 
-test('the three private projects still carry no link', () => {
+test('the three private projects carry no link, and say so', () => {
   for (const host of ['familybot', 'healthintel.et3.media']) {
     assert.ok(!NEW.includes(`href="https://${host}`), `${host} must not be linked`);
   }
-  const noLinks = [...NEW.matchAll(/class="proj-action no-link"/g)];
-  assert.equal(noLinks.length, 3, `expected 3 "No link:" notes, found ${noLinks.length}`);
+  const ledger = (NEW.match(/<article id="p-private"[\s\S]*?<\/article>/) || [''])[0];
+  assert.ok(ledger, 'the private ledger is missing');
+  assert.ok(!/<a\s/.test(ledger), 'the private ledger must not contain a link');
+  assert.equal((ledger.match(/class="no-link"/g) || []).length, 3, 'expected 3 "No link:" notes');
 });

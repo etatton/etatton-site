@@ -69,46 +69,41 @@ const C = (name) => parseColour(T[name]);
 const round = (n) => Math.round(n * 100) / 100;
 
 test('the tokens the design is built on are all declared', () => {
-  for (const n of ['--bg', '--surface', '--fg', '--fg-2', '--fg-3', '--accent', '--rule', '--rule-strong']) {
+  for (const n of ['--dark', '--cream', '--cream-2', '--paper', '--stone', '--ink', '--ink-2', '--accent', '--rule-dark', '--rule-light']) {
     assert.ok(T[n], `${n} is not declared in :root`);
   }
-  assert.equal(T['--bg'], '#141311', 'the ground must be #141311');
+  assert.equal(T['--dark'], '#2f2c28', 'the cover ground must be #2f2c28');
 });
 
-test('body and secondary text and the accent all clear 4.5:1 on both grounds', () => {
-  const bg = C('--bg');
-  const surface = C('--surface');
+test('every text colour clears 4.5:1 on every ground it is used on; the accent clears 3:1', () => {
+  const dark = C('--dark');
+  const paper = C('--paper');
+  const stone = C('--stone');
   const checks = [
-    ['--fg   on --bg     ', ratio(C('--fg'), bg), 4.5],
-    ['--fg   on --surface', ratio(C('--fg'), surface), 4.5],
-    ['--fg-2 on --bg     ', ratio(C('--fg-2'), bg), 4.5],
-    ['--fg-2 on --surface', ratio(C('--fg-2'), surface), 4.5],
-    ['--accent on --bg   ', ratio(C('--accent'), bg), 4.5],
-    ['--accent on --surfc', ratio(C('--accent'), surface), 4.5],
-    ['#141311 on --accent', ratio(parseColour('#141311'), C('--accent')), 4.5],
+    ['--cream   on --dark ', ratio(C('--cream'), dark), 4.5],
+    ['--cream-2 on --dark ', ratio(C('--cream-2'), dark), 4.5],
+    ['--ink     on --paper', ratio(C('--ink'), paper), 4.5],
+    ['--ink-2   on --paper', ratio(C('--ink-2'), paper), 4.5],
+    ['--ink     on --stone', ratio(C('--ink'), stone), 4.5],
+    ['--ink-2   on --stone', ratio(C('--ink-2'), stone), 4.5],
+    ['--dark on --cream (button)', ratio(dark, C('--cream')), 4.5],
+    // Focus rings and the error rule are non-text: WCAG 1.4.11 asks 3:1.
+    ['--accent  on --dark ', ratio(C('--accent'), dark), 3],
+    ['--accent  on --paper', ratio(C('--accent'), paper), 3],
+    ['--accent  on --stone', ratio(C('--accent'), stone), 3],
   ];
 
   console.log('\nWCAG contrast (computed from styles.css tokens):');
   for (const [label, r, min] of checks) {
     console.log(`  ${label}  ${round(r).toFixed(2)}:1   (needs ${min})`);
   }
-  // Reported, deliberately not asserted at 4.5: --fg-3 is reserved for large
-  // text and non-text by the token comment, where the bar is 3:1.
-  const fg3 = ratio(C('--fg-3'), C('--bg'));
-  console.log(`  --fg-3 on --bg       ${round(fg3).toFixed(2)}:1   (large text / non-text only, needs 3)`);
   console.log('');
 
   const failures = checks.filter(([, r, min]) => r < min);
-  assert.deepEqual(
-    failures.map(([l, r]) => `${l.trim()} = ${round(r)}`),
-    [],
-    'contrast below the AA threshold',
-  );
-  assert.ok(fg3 >= 3, `--fg-3 is ${round(fg3)}:1, under the 3:1 large-text floor`);
+  assert.deepEqual(failures.map(([l, r]) => `${l.trim()} = ${round(r)}`), [], 'contrast below threshold');
 });
 
-test('--fg-3 is never used for body-size text', () => {
-  // It only clears 3:1, so any rule that paints it must also raise the size.
-  const uses = [...css.matchAll(/color:\s*var\(--fg-3\)/g)];
-  assert.equal(uses.length, 0, `--fg-3 is used as a text colour ${uses.length} time(s)`);
+test('the accent is never used as a text colour', () => {
+  const uses = [...css.matchAll(/(?:^|[;{\s])color:\s*var\(--accent\)/g)];
+  assert.equal(uses.length, 0, `--accent is used as a text colour ${uses.length} time(s)`);
 });

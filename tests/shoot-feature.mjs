@@ -10,7 +10,9 @@
    1. Opens the URL in headless Chromium at 1600×1000 (16:10, the slot's aspect),
       waits for the network to go quiet, removes any entry-splash overlay so the
       masthead is visible, and writes a JPEG (quality 70) to assets/feature-<slot>.jpg.
-   2. Finds the <figure … data-slot="<slot>"> in index.html. If it still holds the
+   2. (Retired with the 2026 folio: the page now references the JPEG directly, so the
+      markup step below finds no slot and only the image is refreshed.) Finds the
+      <figure … data-slot="<slot>"> in index.html. If it still holds the
       type-only placard, it is replaced by the <img> markup (class feature-media--img,
       no aria-hidden). If it already holds an <img>, only the file is refreshed.
 

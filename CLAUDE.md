@@ -11,14 +11,19 @@ linked out. It is not the studio site (that is et3.media) and not a résumé.
 | domain | `etatton.com` / `www.etatton.com` |
 | hosting | Cloudflare Pages, static, **no build step** — the repo root is the deploy directory |
 | contact mail | `functions/api/contact.js` → Service binding `MAILER` → private `etatton-mailer` Worker |
-| fonts | **self-hosted** in `assets/fonts/` (Fraunces normal + italic, Inter; ~197 KB). There is now **no third-party request at all** |
+| fonts | **self-hosted** in `assets/fonts/` (Instrument Serif normal + italic, Inter Tight variable; ~88 KB; OFL licences beside them). There is **no third-party request at all** |
 
 ## Hard rules
 
 - **No build step, no framework, no site dependencies.** `package.json` exists only to run the
   tests (`node --test`); it must stay dependency-free. `wrangler pages deploy` ships the directory, not
   the git index, so nothing that must not ship may sit in the tree (see `.gitignore` note).
-- **The page reads fully without JavaScript.** `main.js` only enhances the contact form and the year.
+- **The page reads fully without JavaScript.** Without `main.js` it is a plain stacked document. The
+  horizontal "folio" (`html.h`) is switched on by `main.js` only on a wide, landscape, fine-pointer
+  screen with motion allowed; phones, reduced motion and no-JS all get the stacked layout from the
+  same markup. The document always scrolls **vertically** — a sticky viewport turns that distance into
+  a `translateX` of the track — so keyboard, anchors, back/forward and screen readers keep working.
+  Never replace that with a scroll-jacking wheel handler.
 - **All outbound mail goes through `functions/api/contact.js`.** It never sends without the `MAILER`
   binding; a missing binding fails loudly so the client falls back to a prefilled `mailto:` instead of
   telling the visitor a message was sent when it wasn't.
@@ -28,36 +33,53 @@ linked out. It is not the studio site (that is et3.media) and not a résumé.
   tri-state, with DJ Big Mike). The card links to chewydown.com; keep the name spelled ChewyDown.
 - **Every interactive target is ≥ 44px tall, body text ≥ 17px, focus rings visible, reduced motion
   honoured.** `tests/visual.mjs` measures the first two.
-- **The page is dark only.** Ground `#141311`, one `theme-color`, `color-scheme:dark`. There is no
-  light scheme and no `prefers-color-scheme` block; `tests/markup.test.mjs` enforces that.
+- **Grounds alternate by chapter, not by OS theme.** Charcoal `#2f2c28` (cover, Chapter III, Chapter V
+  and ChewyDown), paper `#f9f8f5`, stone `#ece9e4`; each `.theme-*` sets its own ink and
+  `color-scheme`. One `theme-color`, no `prefers-color-scheme` block (`tests/markup.test.mjs`).
+  The accent `#cf5a2e` is for focus rings and the progress line only — never text.
 - **No third-party request.** Fonts are self-hosted; `tests/markup.test.mjs` fails on any external
   host, `@import`, or absolute `url()` in the CSS.
-- **The copy is frozen.** `tests/copy.test.mjs` pulls `git show origin/main:index.html` and asserts
-  every visible string is still on the page. If it goes red, fix the page — never the test.
+- **The copy is pinned.** `tests/copy.snapshot.json` holds every visible string, in order. Copy may
+  change, but deliberately: edit the page, run `UPDATE_COPY=1 node --test tests/copy.test.mjs`, and
+  commit the snapshot diff with it. Facts in the copy come from what is already on the page or in the
+  project repos — the voice can be edgier than before, the claims can't be bigger.
+- **Project imagery is public work only.** `assets/work/` holds client pieces ET3 Media already
+  publishes on et3.media (resized WebP). Never add a picture with a private person's contact details
+  (the business cards in et3.media's print folder are out for that reason) and never a screenshot of a
+  private project.
 - **Contrast is computed, not asserted by hand.** `tests/contrast.test.mjs` parses the tokens out of
-  `styles.css` and composites the translucent ones; `--fg-3` is large-text/non-text only.
+  `styles.css` and composites the translucent ones. Every text pairing must clear 4.5:1 and the accent 3:1 on all three grounds.
 
 ## Layout
 
 ```
-index.html               the one page: header · hero · projects (one <ol>, three tiers) · pull quote ·
-                         about · contact · footer. A 1px #scroll-sentinel and an inline head script
-                         (sets html.js before paint, with a failsafe that removes it if main.js never runs)
-styles.css               @font-face, dark-only tokens, the 12-column .wrap grid, components
-main.js                  year, header-hairline observer, section reveal observer, contact form submit
-                         (fetch → success card; error keeps input + mailto fallback)
-assets/                  portrait, ET3 logo, ChewyDown logo, og.png (1200×630), fonts/
-assets/fonts/            fraunces-normal-latin · fraunces-italic-latin · inter-normal-latin (woff2)
+index.html               the one page, as a folio: .spine (fixed rail / top bar, menu, progress) · #menu ·
+                         main > .viewport > .track of panels: cover · Chapter I intro · The work (pinned
+                         zoom) · Chapter II index (cursor previews) · .cases (one article per project,
+                         private three as one ledger) · Chapter III what I do (hover columns) · Chapter IV
+                         about · Chapter V contact + footer. Inline head script sets html.js before paint
+                         (failsafe removes it if main.js never runs)
+styles.css               @font-face, tokens + .theme-dark/-paper/-stone, the stacked layout, then every
+                         html.h rule for the horizontal folio, reduced-motion and print blocks
+main.js                  year, Norwalk clock, menu, the folio engine (measure → sticky translateX with a
+                         lerp, pinned work zoom, spine colour, progress, deep links, focus snap), Chapter
+                         II previews, contact form submit (fetch → success card; error keeps input +
+                         mailto fallback)
+assets/                  portrait, ET3 + ChewyDown logos, og.png (1200×630), the two feature JPEGs, fonts/
+assets/work/             ET3 Media client work (from et3.media's portfolio), 1200px WebP
+assets/fonts/            instrument-serif-latin · instrument-serif-italic-latin · inter-tight-latin + OFL
 functions/api/contact.js Pages Function: validation, honeypot, MAILER service binding
 tests/contact.test.mjs   node --test: validation, honeypot, missing binding, mailer 200/500, GET 405
-tests/copy.test.mjs      node --test: the copy freeze, against origin/main out of git
-tests/markup.test.mjs    node --test: anchors, assets, fonts, rel=noopener + aria-label, no third party
+tests/copy.test.mjs      node --test: copy pinned to copy.snapshot.json, chapters, project names, no links
+tests/markup.test.mjs    node --test: anchors, assets, fonts, rel=noopener + aria-label, no third party,
+                         palette, menu covers every chapter, alt text
 tests/weight.test.mjs    node --test: html + css + js + fonts < 600 KB (prints the breakdown)
 tests/contrast.test.mjs  node --test: WCAG ratios computed from the tokens in styles.css
-tests/visual.mjs         Playwright: 360/390/1280/1600 — overflow, tap targets, type size, the header
-                         hairline, the reveal, and the no-JS state (needs a local server)
-tests/shoot-feature.mjs  Playwright: shoot a live site at 1600×1000 into assets/feature-<slot>.jpg and swap
-                         the <img> into the matching data-slot figure (placard → image; image → refresh)
+tests/visual.mjs         Playwright: 360/390/1280/1600 overflow, tap targets, type size; the folio (end
+                         reached, zoom grows and stays pinned, hover preview, every Tab stop on screen);
+                         reduced motion stays stacked; the no-JS state (needs a local server)
+tests/shoot-feature.mjs  Playwright: re-shoot a live site at 1600×1000 into assets/feature-<slot>.jpg
+                         (the page references those files directly; no markup to swap any more)
 _headers                 security headers; /api/* no-store
 robots.txt · sitemap.xml
 ```
@@ -107,3 +129,13 @@ npx wrangler pages deploy .          # deploy (needs CLOUDFLARE_API_TOKEN)
   one sentence from About, on purpose. Contact inputs are bottom-rule only with a two-row routes
   ledger above the unchanged fineprint. Header hairline appears on scroll; sections reveal on
   intersection, motion-query gated. Copy frozen and enforced by `tests/copy.test.mjs`.
+
+- **2026-10-26 — "folio" edition.** Rebuilt after khanhnguyen.design, from Ed's screenshots (the
+  sandbox could not reach the site): a fixed left spine, a horizontal folio driven by the normal
+  vertical scroll, Instrument Serif display over Inter Tight, charcoal / paper / stone grounds by
+  chapter. "The work" pins and zooms a 3×3 grid of real pieces to full bleed with the neighbours
+  blurring; Chapter II is an index of names with a cursor-following preview; Chapter III four columns
+  that reveal a picture on hover or focus. Same content and contact form, copy rewritten in a sharper
+  voice with no new claims, copy freeze moved to a reviewed snapshot. Dark-only is retired: the reference
+  alternates charcoal and paper chapters, and so does this. Stacked layout on phones, with reduced motion, and without JS.
+
