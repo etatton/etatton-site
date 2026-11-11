@@ -172,7 +172,7 @@ try {
     await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
     await page.waitForTimeout(1600);
     const contactX = await xOf('#contact');
-    record('folio: scrolling to the end brings Chapter V to the left edge', Math.abs(contactX - 84) <= 2, `#contact at x=${contactX}`);
+    record('folio: scrolling to the end brings Chapter VI to the left edge', Math.abs(contactX - 84) <= 2, `#contact at x=${contactX}`);
     await page.screenshot({ path: `${OUT}/shot-folio-end.png` });
 
     // The work zoom: postcard at the start of the pin, full bleed near the end.

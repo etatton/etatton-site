@@ -122,12 +122,16 @@ test('the H1 is the name', () => {
 
 test('the chapters are all there, in reading order', () => {
   const order = [...NEW.matchAll(/<section[^>]*\sid="([^"]+)"/g)].map((x) => x[1]);
-  assert.deepEqual(order, ['cover', 'intro', 'work', 'projects', 'what', 'about', 'contact']);
+  assert.deepEqual(order, ['cover', 'intro', 'games', 'work', 'projects', 'what', 'about', 'contact']);
 });
 
 test('every project is named, in order', () => {
   const names = [...NEW.matchAll(/<h3[^>]*class="case-name"[^>]*>([\s\S]*?)<\/h3>/g)].map((m) => normalise(m[1]));
   assert.deepEqual(names, [
+    'Pixel Jam',
+    'Camp Counselor Nights',
+    'Prom Night Loop 1986',
+    'Off Road Challenge',
     'The Norwalk Sound',
     'Nothing To See Here',
     'ET3 Media',
