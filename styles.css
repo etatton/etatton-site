@@ -227,6 +227,28 @@ button, input, textarea { font: inherit; color: inherit; }
 .case-media-logo { display: grid; place-items: center; min-height: 240px; border: 1px solid var(--rule); }
 .case-media-logo img { width: min(70%, 420px); box-shadow: none; image-rendering: auto; }
 
+/* ── Chapter II · Games ──────────────────────────────────────────────── */
+.games { padding: calc(var(--bar) + 48px) var(--pad) var(--pad); display: grid; gap: 28px; align-content: start; }
+.games-statement { font: 400 clamp(26px, 3vw, 40px)/1.15 var(--serif); max-width: 22em; }
+.gm-list { border-top: 1px solid var(--rule); }
+.gm-link {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 16px;
+  min-height: 44px; padding: 14px 0; text-decoration: none; border-bottom: 1px solid var(--rule);
+}
+.gm-name { font: 400 clamp(30px, 4.6vw, 64px)/1 var(--sans); letter-spacing: -0.035em; transition: transform .45s var(--ease); }
+.gm-tag { font-size: 14px; text-transform: uppercase; letter-spacing: .03em; color: var(--fg-2); white-space: nowrap; }
+.gm-link:hover .gm-name, .gm-link:focus-visible .gm-name { transform: translateX(14px); }
+/* Two phone screens side by side. */
+.case-media-phones { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 640px; }
+.case-media-phones img { border-radius: 14px; }
+/* A type-only placard while a game has no screens to show. */
+.case-media-placard {
+  display: grid; place-content: center; justify-items: center; gap: 8px; min-height: 300px;
+  background: var(--dark); color: var(--cream); text-transform: uppercase; text-align: center;
+}
+.placard-year { font: 400 clamp(96px, 16vw, 220px)/.85 var(--serif); letter-spacing: -0.02em; }
+.placard-time { font: 500 16px/1 var(--sans); letter-spacing: .3em; color: var(--cream-2); }
+
 .ledger { padding: calc(var(--bar) + 40px) var(--pad) var(--pad); display: grid; gap: 24px; align-content: start; }
 .ledger-cols { display: grid; gap: 28px; }
 .ledger-item { display: grid; gap: 12px; align-content: start; border-top: 1px solid var(--rule); padding-top: 18px; }
@@ -409,6 +431,14 @@ html.h .case-name { font-size: clamp(44px, 9vh, 92px); }
 html.h .case-media img { max-height: 70vh; width: auto; margin: auto; }
 html.h .case-media-stack img { max-height: 37vh; }
 html.h .case-media-logo { height: 60vh; }
+html.h .games { width: 64vw; grid-template-rows: auto auto auto 1fr; gap: 18px; padding-right: 7vw; }
+html.h .games .chapter { margin-bottom: 4vh; }
+html.h .gm-name { font-size: clamp(36px, 7vh, 72px); }
+html.h .gm-link { padding: 1.6vh 0; }
+html.h .case-media-phones { max-width: none; justify-self: center; }
+html.h .case-media-phones img { max-height: 76vh; width: auto; }
+html.h .case-media-placard { height: 64vh; }
+html.h .placard-year { font-size: 26vh; }
 html.h .ledger { grid-template-rows: auto auto 1fr; }
 html.h .ledger .case-num { font-size: 16vh; }
 html.h .ledger-cols { grid-template-columns: repeat(3, 1fr); gap: 3vw; align-self: end; }

@@ -33,8 +33,8 @@ linked out. It is not the studio site (that is et3.media) and not a résumé.
   tri-state, with DJ Big Mike). The card links to chewydown.com; keep the name spelled ChewyDown.
 - **Every interactive target is ≥ 44px tall, body text ≥ 17px, focus rings visible, reduced motion
   honoured.** `tests/visual.mjs` measures the first two.
-- **Grounds alternate by chapter, not by OS theme.** Charcoal `#2f2c28` (cover, Chapter III, Chapter V
-  and ChewyDown), paper `#f9f8f5`, stone `#ece9e4`; each `.theme-*` sets its own ink and
+- **Grounds alternate by chapter, not by OS theme.** Charcoal `#2f2c28` (cover, Chapter II Games,
+  Camp Counselor Nights, Chapter IV, Chapter VI and ChewyDown), paper `#f9f8f5`, stone `#ece9e4`; each `.theme-*` sets its own ink and
   `color-scheme`. One `theme-color`, no `prefers-color-scheme` block (`tests/markup.test.mjs`).
   The accent `#cf5a2e` is for focus rings and the progress line only — never text.
 - **No third-party request.** Fonts are self-hosted; `tests/markup.test.mjs` fails on any external
@@ -43,6 +43,9 @@ linked out. It is not the studio site (that is et3.media) and not a résumé.
   change, but deliberately: edit the page, run `UPDATE_COPY=1 node --test tests/copy.test.mjs`, and
   commit the snapshot diff with it. Facts in the copy come from what is already on the page or in the
   project repos — the voice can be edgier than before, the claims can't be bigger.
+- **Games come first.** They are Chapter II, ahead of the studio work. Off Road Challenge is client work
+  ET3 Media builds for the Northeast Land Rover Club ("Northeast", not "New England") and links to nelrc.ai;
+  Camp Counselor Nights and Prom Night Loop 1986 carry a "No link yet" note until they have a public URL.
 - **Project imagery is public work only.** `assets/work/` holds client pieces ET3 Media already
   publishes on et3.media (resized WebP). Never add a picture with a private person's contact details
   (the business cards in et3.media's print folder are out for that reason) and never a screenshot of a
@@ -54,10 +57,11 @@ linked out. It is not the studio site (that is et3.media) and not a résumé.
 
 ```
 index.html               the one page, as a folio: .spine (fixed rail / top bar, menu, progress) · #menu ·
-                         main > .viewport > .track of panels: cover · Chapter I intro · The work (pinned
-                         zoom) · Chapter II index (cursor previews) · .cases (one article per project,
-                         private three as one ledger) · Chapter III what I do (hover columns) · Chapter IV
-                         about · Chapter V contact + footer. Inline head script sets html.js before paint
+                         main > .viewport > .track of panels: cover · Chapter I intro · Chapter II Games
+                         (list) + .cases of four game articles (#g-pixeljam, #g-camp, #g-prom, #g-nelrc) ·
+                         The work (pinned zoom) · Chapter III index (cursor previews) · .cases (one
+                         article per project, private three as one ledger) · Chapter IV what I do (hover
+                         columns) · Chapter V about · Chapter VI contact + footer. Inline head script sets html.js before paint
                          (failsafe removes it if main.js never runs)
 styles.css               @font-face, tokens + .theme-dark/-paper/-stone, the stacked layout, then every
                          html.h rule for the horizontal folio, reduced-motion and print blocks
@@ -66,6 +70,9 @@ main.js                  year, Norwalk clock, menu, the folio engine (measure �
                          II previews, contact form submit (fetch → success card; error keeps input +
                          mailto fallback)
 assets/                  portrait, ET3 + ChewyDown logos, og.png (1200×630), the two feature JPEGs, fonts/
+assets/games/            real screens from the game repos (Pixel Jam promo shots, Camp Counselor
+                         Nights review captures, NELRC.ai trail renders), WebP. Prom Night Loop 1986 has
+                         none yet: its panel is a CSS type placard until it does
 assets/work/             ET3 Media client work (from et3.media's portfolio), 1200px WebP
 assets/fonts/            instrument-serif-latin · instrument-serif-italic-latin · inter-tight-latin + OFL
 functions/api/contact.js Pages Function: validation, honeypot, MAILER service binding
@@ -139,3 +146,9 @@ npx wrangler pages deploy .          # deploy (needs CLOUDFLARE_API_TOKEN)
   voice with no new claims, copy freeze moved to a reviewed snapshot. Dark-only is retired: the reference
   alternates charcoal and paper chapters, and so does this. Stacked layout on phones, with reduced motion, and without JS.
 
+- **2026-11-11 — Games chapter.** Games became Chapter II, right after the intro, ahead of the studio work:
+  a charcoal list panel and one case panel per game — Pixel Jam (links to et3.media/pixeljam), Camp
+  Counselor Nights and Prom Night Loop 1986 (no link yet), and Off Road Challenge for the Northeast Land
+  Rover Club (links to nelrc.ai). Screens come from each game's repo, resized to WebP in `assets/games/`;
+  Prom Night has a type-only "1986" placard. Later chapters renumbered III–VI; the intro and ET3 Media
+  copy mention games; copy snapshot updated.
